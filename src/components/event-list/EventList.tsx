@@ -2,7 +2,7 @@
 
 const EventList = () => {
   return (
-    <div>EventList</div>
+  <div className="d-flex">EventList</div>
   )
 }
 
