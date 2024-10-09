@@ -1,0 +1,10 @@
+.events-nav{
+    height: 100px;
+    background-color: #2fb9b5;
+    color: #41385f;
+    border-radius: 0 0px 21px 21px;
+}
+.events-nav>h1{
+    font-size: 20px;
+    font-weight: 400px;
+}
