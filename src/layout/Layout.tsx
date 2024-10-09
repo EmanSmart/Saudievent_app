@@ -1,11 +1,12 @@
 import EventList from "../components/event-list/EventList";
-import HeaderEvent from "../components/Header-eventList/HeaderEvent"
+
+import "./Layout.css";
 const Layout = () => {
   return (
-    <>
-    <HeaderEvent/>
+    <div className="layout vh-100">
+
       <EventList />
-    </>
+    </div>
   );
 };
 

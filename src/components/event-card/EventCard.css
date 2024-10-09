@@ -1,0 +1,22 @@
+.card {
+  background-color: transparent;
+  color: white;
+  border-color: white;
+  margin-right: 15px;
+  border-radius: 15px;
+}
+.card-title{
+    font-size: 15px;
+}
+.card-btn {
+  background-color: #f48337;
+  border-style: none;
+  border-radius: 20px;
+  font-size: smaller;
+  font-weight: 500;
+}
+.card-img{
+    border-radius: 10px;
+    height: 100%;
+    
+}
