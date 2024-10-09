@@ -1,10 +1,15 @@
 .events-nav{
-    height: 100px;
+    height: 110px;
     background-color: #2fb9b5;
     color: #41385f;
     border-radius: 0 0px 21px 21px;
 }
 .events-nav>h1{
     font-size: 20px;
-    font-weight: 400px;
+    font-weight: 700;
 }
+.modal.fade .modal-dialog{
+    transform: translate(0px, 0px) ;
+
+}
+

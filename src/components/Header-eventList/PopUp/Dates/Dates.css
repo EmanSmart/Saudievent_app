@@ -1,0 +1,102 @@
+.filter-dates nav {
+  height: 61px;
+  box-shadow: none;
+}
+
+.filter-dates * {
+  color: white !important;
+}
+
+.filter-dates .position-absolute {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 20px;
+}
+
+.filter-dates .filter-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-dates .days-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.filter-dates .day-names {
+  background-color: #2fb9b5;
+  z-index: 3000;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.filter-dates .day-name {
+  font-weight: bold;
+  width: 14%;
+}
+
+.filter-dates .days-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+.filter-dates .day {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.filter-dates .day.today {
+  background-color: #df2a57;
+  color: white;
+}
+
+.filter-dates .day.empty {
+  background-color: transparent;
+}
+
+.filter-dates .day:hover {
+  background-color: #df2a57;
+}
+
+.filter-dates .buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.day.disabled {
+  pointer-events: none;
+  color: #d2d2d2 !important;
+}
+.month-slide-up {
+  display: inline-block;
+  animation: slideUp 0.5s ease-in-out;
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
