@@ -4,7 +4,7 @@ import HeaderEvent from "../components/Header-eventList/Header/HeaderEvent";
 
 const Layout = () => {
   return (
-    <div className="layout vh-100">
+    <div className="layout">
       <HeaderEvent />
       <EventList />
     </div>

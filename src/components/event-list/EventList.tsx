@@ -40,7 +40,7 @@ const events: Event[] = [
 ];
 const EventList = () => {
   return (
-    <div className="list row">
+    <div className="list row mt-3">
       <div className="col-3">
         <div className="time">
           <div className="time-card">10 Oct</div>

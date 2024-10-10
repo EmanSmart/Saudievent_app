@@ -76,7 +76,7 @@ const DatesFilter: React.FC<DatesFilterProps> = ({ setDates }) => {
 
   return (
     <div
-      className="position-absolute filter filter-dates filter-content d-flex flex-column"
+      className="position-absolute filter filter-dates filter-content d-flex flex-column z-50"
       role="dialog"
       aria-labelledby="dates-filter-title"
     >
