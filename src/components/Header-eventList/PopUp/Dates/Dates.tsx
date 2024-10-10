@@ -129,7 +129,7 @@ const DatesFilter: React.FC<DatesFilterProps> = ({ setDates }) => {
         }}
         loop={true}
       >
-        {months.map((month, index) => (
+        {months.map((_,index) => (
           <SwiperSlide key={index}>
             <div className="days-container">
               <div className="days-grid">
