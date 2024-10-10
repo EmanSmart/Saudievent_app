@@ -5,7 +5,6 @@ import "./Dates.css";
 
 interface DatesFilterProps {
   setDates: (value: boolean) => void;
-  setMonth: (value: string) => void;
 }
 
 const months = [
@@ -25,29 +24,26 @@ const months = [
 
 const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-const DatesFilter: React.FC<DatesFilterProps> = ({ setDates, setMonth }) => {
+const DatesFilter: React.FC<DatesFilterProps> = ({ setDates }) => {
   const today = new Date();
   const [currentMonthIndex, setCurrentMonthIndex] = useState<number>(
     today.getMonth()
   );
-  const currentYear = today.getFullYear();
-
-  // selected
   const [selectedMonthIndex, setSelectedMonthIndex] = useState<number>(
     today.getMonth()
   );
+  const currentYear = today.getFullYear();
   const [daySelected, setDaySelected] = useState(today.getDate());
   const [selectedDate, setSelectedDate] = useState({
     day: daySelected,
     month: selectedMonthIndex + 1,
   });
-
   const handleDateFilter = () => {
-    setMonth(months[selectedMonthIndex]);
-    sessionStorage.setItem("monthFilter", JSON.stringify(selectedDate));
+    console.log(
+      `Selected Month: ${months[selectedMonthIndex]}, Year: ${currentYear}, Day: ${selectedDate.day}`
+    );
     setDates(false);
   };
-
   const generateDaysInMonth = (monthIndex: number, year: number) => {
     const date = new Date(year, monthIndex + 1, 0);
     return Array.from({ length: date.getDate() }, (_, i) => i + 1);
@@ -71,23 +67,12 @@ const DatesFilter: React.FC<DatesFilterProps> = ({ setDates, setMonth }) => {
   const isPastDay = (day: number, monthIndex: number) => {
     return new Date(currentYear, monthIndex, day) < today;
   };
-
   const [animationKey, setAnimationKey] = useState(0);
 
   useEffect(() => {
-  
-    const storedDate = sessionStorage.getItem("monthFilter");
-    if (storedDate) {
-      const parsedDate = JSON.parse(storedDate);
-      setSelectedMonthIndex(parsedDate.month - 1);
-      setDaySelected(parsedDate.day);
-      setCurrentMonthIndex(parsedDate.month - 1); 
-      setSelectedDate(parsedDate);
-    }
-
     // Update animationKey to trigger re-render when the month changes
     setAnimationKey((prevKey) => prevKey + 1);
-  }, []);
+  }, [currentMonthIndex]);
 
   return (
     <div
@@ -132,209 +117,193 @@ const DatesFilter: React.FC<DatesFilterProps> = ({ setDates, setMonth }) => {
           </div>
         ))}
       </div>
-
       <Swiper
         direction="vertical"
         spaceBetween={50}
         className="w-100 px-3"
         style={{ height: "250px", overflow: "hidden" }}
-        initialSlide={
-          sessionStorage.getItem("monthFilter")
-            ? JSON.parse(sessionStorage.getItem("monthFilter")!)?.month - 1 
-            : currentMonthIndex
-        }
-                onSlideChange={(swiper) => {
+        initialSlide={currentMonthIndex}
+        onSlideChange={(swiper) => {
           const newMonthIndex = swiper.realIndex % 12;
           setCurrentMonthIndex(newMonthIndex);
         }}
         loop={true}
       >
-<<<<<<< HEAD
         {months.map((_,index) => (
-=======
-        {months.map((_, index) => (
->>>>>>> 78a64fa32d4e66de521ea3ef446ebff10216fb56
           <SwiperSlide key={index}>
             <div className="days-container">
-                <div className="days-grid">
-                  {/* الأيام من الشهر السابق */}
-                  {Array.from({
-                    length: getFirstDayOfMonth(index, currentYear),
-                  }).map((_, i) => {
-                    const previousMonthDays = getPreviousMonthDays(
-                      index,
-                      currentYear
-                    );
-                    const dayFromPrevMonth =
-                      previousMonthDays[
-                        previousMonthDays.length -
-                          getFirstDayOfMonth(index, currentYear) +
-                          i
-                      ];
+              <div className="days-grid">
+                {/* الأيام من الشهر السابق */}
+                {Array.from({
+                  length: getFirstDayOfMonth(index, currentYear),
+                }).map((_, i) => {
+                  const previousMonthDays = getPreviousMonthDays(
+                    index,
+                    currentYear
+                  );
+                  const dayFromPrevMonth =
+                    previousMonthDays[
+                      previousMonthDays.length -
+                        getFirstDayOfMonth(index, currentYear) +
+                        i
+                    ];
 
-                    return (
-                      <div
-                        key={`prev-${i}`}
-                        onClick={() => {
-                          if (
-                            !isPastDay(
-                              dayFromPrevMonth,
-                              index === 0 ? 11 : index - 1
-                            )
-                          ) {
-                            setDaySelected(dayFromPrevMonth);
-                            setSelectedMonthIndex(index === 0 ? 11 : index - 1);
-                            setSelectedDate({
-                              day: dayFromPrevMonth,
-                              month: index === 0 ? 12 : index,
-                            });
-                          }
-                        }}
-                        className={`day prev-month ${
-                          isPastDay(
+                  return (
+                    <div
+                      key={`prev-${i}`}
+                      onClick={() => {
+                        if (
+                          !isPastDay(
                             dayFromPrevMonth,
                             index === 0 ? 11 : index - 1
                           )
-                            ? "disabled"
-                            : ""
-                        }`}
-                        style={{
-                          background:
-                            selectedDate.day === dayFromPrevMonth &&
-                            selectedMonthIndex ===
-                              (index === 0 ? 11 : index - 1)
-                              ? "#f48337"
-                              : "",
-                        }}
-                        role="button"
-                        aria-label={`Select ${dayFromPrevMonth} ${
-                          months[index === 0 ? 11 : index - 1]
-                        }`}
-                      >
-                        {dayFromPrevMonth}
-                      </div>
-                    );
-                  })}
+                        ) {
+                          setDaySelected(dayFromPrevMonth);
+                          setSelectedMonthIndex(index === 0 ? 11 : index - 1);
+                          setSelectedDate({
+                            day: dayFromPrevMonth,
+                            month: index === 0 ? 12 : index,
+                          });
+                        }
+                      }}
+                      className={`day prev-month ${
+                        isPastDay(
+                          dayFromPrevMonth,
+                          index === 0 ? 11 : index - 1
+                        )
+                          ? "disabled"
+                          : ""
+                      }`}
+                      style={{
+                        background:
+                          selectedDate.day === dayFromPrevMonth &&
+                          selectedMonthIndex === (index === 0 ? 11 : index - 1)
+                            ? "#f48337"
+                            : "",
+                      }}
+                      role="button"
+                      aria-label={`Select ${dayFromPrevMonth} ${
+                        months[index === 0 ? 11 : index - 1]
+                      }`}
+                    >
+                      {dayFromPrevMonth}
+                    </div>
+                  );
+                })}
 
-                  {/* الأيام من الشهر الحالي */}
-                  {generateDaysInMonth(index, currentYear).map((day) => {
-                    const isPastDayCurrent =
-                      isPastDay(day, index) &&
-                      !(
-                        today.getDate() === day &&
-                        today.getMonth() === index &&
-                        today.getFullYear() === currentYear
-                      );
-                    const isSelectedDay =
-                      selectedDate.day === day && selectedMonthIndex === index;
-                    const isToday =
+                {/* الأيام من الشهر الحالي */}
+                {generateDaysInMonth(index, currentYear).map((day) => {
+                  const isPastDayCurrent =
+                    isPastDay(day, index) &&
+                    !(
                       today.getDate() === day &&
                       today.getMonth() === index &&
-                      today.getFullYear() === currentYear;
-
-                    return (
-                      <div
-                        key={day}
-                        onClick={() => {
-                          if (!isPastDayCurrent) {
-                            setDaySelected(day);
-                            setSelectedMonthIndex(index);
-                            setSelectedDate({ day, month: index + 1 });
-                            console.log({ day, month: index + 1 });
-                          }
-                        }}
-                        style={{
-                          background: isSelectedDay || isToday ? "#f48337" : "",
-                          opacity: isPastDayCurrent ? 0.9 : 1,
-                        }}
-                        className={`day ${isPastDayCurrent ? "disabled" : ""} ${
-                          isToday ? "today" : ""
-                        }`}
-                        role="button"
-                        aria-label={`Select ${day} ${months[index]}`}
-                      >
-                        {day}
-                      </div>
+                      today.getFullYear() === currentYear
                     );
-                  })}
+                  const isSelectedDay =
+                    selectedDate.day === day && selectedMonthIndex === index;
+                  const isToday =
+                    today.getDate() === day &&
+                    today.getMonth() === index &&
+                    today.getFullYear() === currentYear;
 
-                  {/* الأيام من الشهر التالي */}
-                  {Array.from({
-                    length: 13 - getLastDayOfMonth(index, currentYear),
-                  }).map((_, i) => {
-                    const nextMonthDate = new Date(
-                      currentYear,
-                      index + 1,
-                      i + 1
-                    );
-                    const dayFromNextMonth = i + 1;
+                  return (
+                    <div
+                      key={day}
+                      onClick={() => {
+                        if (!isPastDayCurrent) {
+                          setDaySelected(day);
+                          setSelectedMonthIndex(index);
+                          setSelectedDate({ day, month: index + 1 });
+                          console.log({ day, month: index + 1 });
+                        }
+                      }}
+                      style={{
+                        background: isSelectedDay || isToday ? "#f48337" : "",
+                        opacity: isPastDayCurrent ? 0.9 : 1,
+                      }}
+                      className={`day ${isPastDayCurrent ? "disabled" : ""} ${
+                        isToday ? "today" : ""
+                      }`}
+                      role="button"
+                      aria-label={`Select ${day} ${months[index]}`}
+                    >
+                      {day}
+                    </div>
+                  );
+                })}
 
-                    const isSelectedDay =
-                      selectedDate.day === dayFromNextMonth &&
-                      selectedMonthIndex === (index + 1) % 12;
-                    const isToday =
-                      today.getDate() === dayFromNextMonth &&
-                      today.getMonth() === (index + 1) % 12 &&
-                      today.getFullYear() === currentYear;
+                {/* الأيام من الشهر التالي */}
+                {Array.from({
+                  length: 13 - getLastDayOfMonth(index, currentYear),
+                }).map((_, i) => {
+                  const nextMonthDate = new Date(currentYear, index + 1, i + 1);
+                  const dayFromNextMonth = i + 1;
 
-                    return (
-                      <div
-                        key={`next-${i}`}
-                        onClick={() => {
-                          if (
-                            !(
-                              nextMonthDate.getMonth() <
-                                new Date().getMonth() ||
-                              (nextMonthDate.getMonth() ===
-                                new Date().getMonth() &&
-                                nextMonthDate.getDate() < new Date().getDate())
-                            )
-                          ) {
-                            setDaySelected(dayFromNextMonth);
-                            setSelectedMonthIndex((index + 1) % 12);
-                            setSelectedDate({
-                              day: dayFromNextMonth,
-                              month: (index + 2) % 12 === 0 ? 12 : index + 2,
-                            });
-                          }
-                        }}
-                        style={{
-                          background: isSelectedDay || isToday ? "#f48337" : "",
-                          opacity:
+                  const isSelectedDay =
+                    selectedDate.day === dayFromNextMonth &&
+                    selectedMonthIndex === (index + 1) % 12;
+                  const isToday =
+                    today.getDate() === dayFromNextMonth &&
+                    today.getMonth() === (index + 1) % 12 &&
+                    today.getFullYear() === currentYear;
+
+                  return (
+                    <div
+                      key={`next-${i}`}
+                      onClick={() => {
+                        if (
+                          !(
                             nextMonthDate.getMonth() < new Date().getMonth() ||
                             (nextMonthDate.getMonth() ===
                               new Date().getMonth() &&
                               nextMonthDate.getDate() < new Date().getDate())
-                              ? 0.9
-                              : 1,
-                        }}
-                        className={`day next-month ${
+                          )
+                        ) {
+                          setDaySelected(dayFromNextMonth);
+                          setSelectedMonthIndex((index + 1) % 12);
+                          setSelectedDate({
+                            day: dayFromNextMonth,
+                            month: (index + 2) % 12 === 0 ? 12 : index + 2,
+                          });
+                        }
+                      }}
+                      style={{
+                        background: isSelectedDay || isToday ? "#f48337" : "",
+                        opacity:
                           nextMonthDate.getMonth() < new Date().getMonth() ||
                           (nextMonthDate.getMonth() === new Date().getMonth() &&
                             nextMonthDate.getDate() < new Date().getDate())
-                            ? "disabled"
-                            : ""
-                        }`}
-                        role="button"
-                        aria-label={`Select ${dayFromNextMonth} ${
-                          months[(index + 1) % 12]
-                        }`}
-                      >
-                        {dayFromNextMonth}
-                      </div>
-                    );
-                  })}
+                            ? 0.9
+                            : 1,
+                      }}
+                      className={`day next-month ${
+                        nextMonthDate.getMonth() < new Date().getMonth() ||
+                        (nextMonthDate.getMonth() === new Date().getMonth() &&
+                          nextMonthDate.getDate() < new Date().getDate())
+                          ? "disabled"
+                          : ""
+                      }`}
+                      role="button"
+                      aria-label={`Select ${dayFromNextMonth} ${
+                        months[(index + 1) % 12]
+                      }`}
+                    >
+                      {dayFromNextMonth}
+                    </div>
+                  );
+                })}
 
-                  {Array.from({
-                    length:
-                      13 -
-                      (getFirstDayOfMonth(index, currentYear) +
-                        generateDaysInMonth(index, currentYear).length +
-                        (13 - getLastDayOfMonth(index, currentYear))),
-                  }).map((_, i) => (
-                    <div key={`empty-${i}`} className="day empty" />
-                  ))}
-                </div>{" "}
+                {Array.from({
+                  length:
+                    13 -
+                    (getFirstDayOfMonth(index, currentYear) +
+                      generateDaysInMonth(index, currentYear).length +
+                      (13 - getLastDayOfMonth(index, currentYear))),
+                }).map((_, i) => (
+                  <div key={`empty-${i}`} className="day empty" />
+                ))}
+              </div>
             </div>
           </SwiperSlide>
         ))}
@@ -343,18 +312,14 @@ const DatesFilter: React.FC<DatesFilterProps> = ({ setDates, setMonth }) => {
       <div className="buttons flex-fill align-items-end px-3 py-3 gap-3">
         <button
           className="rounded-pill w-50  bg-transparent py-3"
-          style={{ height: "fit-content", border: "2px solid white" }}
+          style={{ height: "fit-content" ,border:"2px solid white"}}
           onClick={() => setDates(false)}
         >
           Cancel
         </button>
         <button
-          className="rounded-pill w-50  py-3"
-          style={{
-            height: "fit-content",
-            background: "#f48337",
-            border: "2px solid white",
-          }}
+          className="rounded-pill w-50  py-3 "
+          style={{ height: "fit-content", background: "#f48337" ,border:"2px solid white"}}
           onClick={() => handleDateFilter()}
         >
           OK
