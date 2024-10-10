@@ -68,7 +68,7 @@ const Interest: React.FC<InterestProps> = ({ selectedInterests, setSelectedInter
                         cursor: 'pointer',
                         fontSize: '14px',
                         fontWeight: '500',
-                        backgroundColor: selectedInterests.includes(interest.text) ? '#DF2A57' : 'transparent',
+                        backgroundColor: selectedInterests.includes(interest.text) ? '#f48337' : 'transparent',
                         borderColor: '#FFFFFF',
                         height: 'fit-content', 
                         marginBottom: index === interests.length - 1 ? '36px' : '0',  

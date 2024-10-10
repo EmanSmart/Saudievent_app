@@ -76,7 +76,7 @@ const DatesFilter: React.FC<DatesFilterProps> = ({ setDates }) => {
 
   return (
     <div
-      className="position-absolute filter filter-dates filter-content d-flex flex-column"
+      className="position-absolute filter filter-dates filter-content d-flex flex-column z-50"
       role="dialog"
       aria-labelledby="dates-filter-title"
     >
@@ -178,7 +178,7 @@ const DatesFilter: React.FC<DatesFilterProps> = ({ setDates }) => {
                         background:
                           selectedDate.day === dayFromPrevMonth &&
                           selectedMonthIndex === (index === 0 ? 11 : index - 1)
-                            ? "#DF2A57"
+                            ? "#f48337"
                             : "",
                       }}
                       role="button"
@@ -219,7 +219,7 @@ const DatesFilter: React.FC<DatesFilterProps> = ({ setDates }) => {
                         }
                       }}
                       style={{
-                        background: isSelectedDay || isToday ? "#DF2A57" : "",
+                        background: isSelectedDay || isToday ? "#f48337" : "",
                         opacity: isPastDayCurrent ? 0.9 : 1,
                       }}
                       className={`day ${isPastDayCurrent ? "disabled" : ""} ${
@@ -269,7 +269,7 @@ const DatesFilter: React.FC<DatesFilterProps> = ({ setDates }) => {
                         }
                       }}
                       style={{
-                        background: isSelectedDay || isToday ? "#DF2A57" : "",
+                        background: isSelectedDay || isToday ? "#f48337" : "",
                         opacity:
                           nextMonthDate.getMonth() < new Date().getMonth() ||
                           (nextMonthDate.getMonth() === new Date().getMonth() &&
@@ -319,7 +319,7 @@ const DatesFilter: React.FC<DatesFilterProps> = ({ setDates }) => {
         </button>
         <button
           className="rounded-pill w-50  py-3 "
-          style={{ height: "fit-content", background: "#DF2A57" ,border:"2px solid white"}}
+          style={{ height: "fit-content", background: "#f48337" ,border:"2px solid white"}}
           onClick={() => handleDateFilter()}
         >
           OK

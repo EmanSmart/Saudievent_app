@@ -1,6 +1,9 @@
 .events-nav{
     height: 110px;
-    background-color: #2fb9b5;
+    background-color: white;
+    position: sticky;
+    top: 0;
+    z-index: 4000;
     color: #41385f;
     border-radius: 0 0px 21px 21px;
 }

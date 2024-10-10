@@ -30,7 +30,7 @@
 }
 
 .filter-dates .day-names {
-  background-color: #2fb9b5;
+  background-color: #2e245a;
   z-index: 3000;
   display: flex;
   justify-content: space-between;
@@ -62,7 +62,7 @@
 }
 
 .filter-dates .day.today {
-  background-color: #df2a57;
+  background-color: #f48337;
   color: white;
 }
 
@@ -71,7 +71,7 @@
 }
 
 .filter-dates .day:hover {
-  background-color: #df2a57;
+  background-color: #f48337;
 }
 
 .filter-dates .buttons {
