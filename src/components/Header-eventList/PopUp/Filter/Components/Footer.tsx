@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface FooterEventsProps {
   selectedPlaces: string[];
@@ -9,9 +9,8 @@ interface FooterEventsProps {
   setMinValue: React.Dispatch<React.SetStateAction<number>>;
   maxValue: number;
   setMaxValue: React.Dispatch<React.SetStateAction<number>>;
-  setFilter: (value: boolean) => void;  
+  setFilter: (value: boolean) => void;
 }
-
 
 const FooterEvents: React.FC<FooterEventsProps> = ({
   selectedPlaces,
@@ -24,7 +23,6 @@ const FooterEvents: React.FC<FooterEventsProps> = ({
   setMaxValue,
   setFilter,
 }) => {
-
   // Function to handle clearing all filters
   const handleClearAll = () => {
     setSelectedPlaces([]);
@@ -36,12 +34,26 @@ const FooterEvents: React.FC<FooterEventsProps> = ({
   // Function to handle applying the filter
   const handleApplyFilter = () => {
     console.log(selectedPlaces, selectedInterests, minValue, maxValue);
+    sessionStorage.setItem(
+      "filter",
+      JSON.stringify({
+        selectedPlaces: selectedPlaces,
+        selectedInterests: selectedInterests,
+        minValue: minValue,
+        maxValue: maxValue,
+      })
+    );
     setFilter(false);
   };
 
   // Function to check if the Apply Filter button should be active or disabled
   const isFilterDisabled = () => {
-    return !(selectedPlaces.length > 0 || selectedInterests.length > 0 || minValue > 0 || maxValue < 500);
+    return !(
+      selectedPlaces.length > 0 ||
+      selectedInterests.length > 0 ||
+      minValue > 0 ||
+      maxValue < 500
+    );
   };
 
   return (

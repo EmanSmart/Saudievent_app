@@ -1,21 +1,21 @@
-import React from 'react';
-import Arts from "../../../../../assets/images/Arts & Culture.png"
-import Concerts from "../../../../../assets/images/Concerts.png"
-import Cruises from "../../../../../assets/images/Cruises.png"
-import Desert from "../../../../../assets/images/Desert Camping.png"
-import Esports from "../../../../../assets/images/Esports.png"
-import Experiences from "../../../../../assets/images/Experiences.png"
-import Family from "../../../../../assets/images/Family Entertainment.png"
-import Festivals from "../../../../../assets/images/Festivals.png"
-import Heritage from "../../../../../assets/images/Heritage Sites.png"
-import Performance from "../../../../../assets/images/Live Performance.png"
-import Museum from "../../../../../assets/images/Museum.png"
-import Zoo from "../../../../../assets/images/Zoo.png"
-import Parks from "../../../../../assets/images/Parks.png"
-import Theater from "../../../../../assets/images/Theater.png"
-import Sun from "../../../../../assets/images/Sun.png"
-import Sports from "../../../../../assets/images/Sports.png"
-import Restaurants from "../../../../../assets/images/Restaurants.png"
+import React, { useEffect } from 'react';
+import Arts from "../../../../../assets/images/Arts & Culture.png";
+import Concerts from "../../../../../assets/images/Concerts.png";
+import Cruises from "../../../../../assets/images/Cruises.png";
+import Desert from "../../../../../assets/images/Desert Camping.png";
+import Esports from "../../../../../assets/images/Esports.png";
+import Experiences from "../../../../../assets/images/Experiences.png";
+import Family from "../../../../../assets/images/Family Entertainment.png";
+import Festivals from "../../../../../assets/images/Festivals.png";
+import Heritage from "../../../../../assets/images/Heritage Sites.png";
+import Performance from "../../../../../assets/images/Live Performance.png";
+import Museum from "../../../../../assets/images/Museum.png";
+import Zoo from "../../../../../assets/images/Zoo.png";
+import Parks from "../../../../../assets/images/Parks.png";
+import Theater from "../../../../../assets/images/Theater.png";
+import Sun from "../../../../../assets/images/Sun.png";
+import Sports from "../../../../../assets/images/Sports.png";
+import Restaurants from "../../../../../assets/images/Restaurants.png";
 
 interface InterestItem {
     icon: string;
@@ -40,7 +40,6 @@ const interests: InterestItem[] = [
     { icon: Theater, text: 'Theater' },
     { icon: Parks, text: 'Theme Parks' },
     { icon: Zoo, text: 'Zoo' }
-
 ];
 
 interface InterestProps {
@@ -49,6 +48,17 @@ interface InterestProps {
 }
 
 const Interest: React.FC<InterestProps> = ({ selectedInterests, setSelectedInterests }) => {
+    // Retrieve selected interests from sessionStorage on component mount
+    useEffect(() => {
+      
+        const storedFilter = sessionStorage.getItem("filter");
+        if (storedFilter) {
+            const parsedFilter = JSON.parse(storedFilter);
+            if (parsedFilter.selectedInterests) {
+                setSelectedInterests(parsedFilter.selectedInterests);
+            }
+        }
+    }, [setSelectedInterests]);
 
     const handleSelection = (text: string) => {
         if (selectedInterests.includes(text)) {
@@ -56,10 +66,22 @@ const Interest: React.FC<InterestProps> = ({ selectedInterests, setSelectedInter
         } else {
             setSelectedInterests([...selectedInterests, text]);
         }
+
+        // Update sessionStorage whenever selectedInterests changes
+        sessionStorage.setItem(
+            "filter",
+            JSON.stringify({
+                selectedInterests: selectedInterests.includes(text)
+                    ? selectedInterests.filter(item => item !== text) // Remove interest
+                    : [...selectedInterests, text], // Add interest
+                // Merge with other stored filter data
+                ...JSON.parse(sessionStorage.getItem("filter") || "{}"),
+            })
+        );
     };
 
     return (
-        <div className="d-flex flex-wrap gap-3 interest" >
+        <div className="d-flex flex-wrap gap-3 interest">
             {interests.map((interest, index) => (
                 <div
                     key={index}
@@ -70,12 +92,12 @@ const Interest: React.FC<InterestProps> = ({ selectedInterests, setSelectedInter
                         fontWeight: '500',
                         backgroundColor: selectedInterests.includes(interest.text) ? '#f48337' : 'transparent',
                         borderColor: '#FFFFFF',
-                        height: 'fit-content', 
-                        marginBottom: index === interests.length - 1 ? '36px' : '0',  
+                        height: 'fit-content',
+                        marginBottom: index === interests.length - 1 ? '36px' : '0',
                     }}
                     onClick={() => handleSelection(interest.text)}
                 >
-                    <img src={interest.icon} width={20} height={20} />
+                    <img src={interest.icon} width={20} height={20} alt={interest.text} />
                     <span>{interest.text}</span>
                 </div>
             ))}

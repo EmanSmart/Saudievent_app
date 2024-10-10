@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import check from "../../../../../assets/images/check.png";
 
 const touristPlaces: string[] = [
@@ -19,12 +19,38 @@ interface ZonesProps {
 }
 
 const Zones: React.FC<ZonesProps> = ({ selectedPlaces, setSelectedPlaces }) => {
-  const handleCheckboxChange = (place: string) => {
-    if (selectedPlaces.includes(place)) {
-      setSelectedPlaces(selectedPlaces.filter((item) => item !== place));
-    } else {
-      setSelectedPlaces([...selectedPlaces, place]);
+  // Retrieve stored places from sessionStorage on component mount
+  useEffect(() => {
+    
+    const storedFilter = sessionStorage.getItem("filter");
+    if (storedFilter) {
+      const parsedFilter = JSON.parse(storedFilter);
+      if (parsedFilter.selectedPlaces) {
+        setSelectedPlaces(parsedFilter.selectedPlaces);
+      }
     }
+  }, [setSelectedPlaces]);
+
+  const handleCheckboxChange = (place: string) => {
+    let updatedPlaces;
+    if (selectedPlaces.includes(place)) {
+      updatedPlaces = selectedPlaces.filter((item) => item !== place);
+    } else {
+      updatedPlaces = [...selectedPlaces, place];
+    }
+
+    // Update state
+    setSelectedPlaces(updatedPlaces);
+
+    // Store the updated selected places in sessionStorage
+    sessionStorage.setItem(
+      "filter",
+      JSON.stringify({
+        selectedPlaces: updatedPlaces,
+        // Assuming other filter values are already stored, retrieve them from sessionStorage
+        ...JSON.parse(sessionStorage.getItem("filter") || "{}"),
+      })
+    );
   };
 
   return (

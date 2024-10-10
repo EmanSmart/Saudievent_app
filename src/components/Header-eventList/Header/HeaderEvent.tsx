@@ -7,7 +7,7 @@ const HeaderEvent = () => {
   const [filter, setFilter] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isVisibleDates, setIsVisibleDates] = useState(false);
-
+  const [Month,setMonth] = useState('October')
   const [Dates, setDates] = useState(false)
   useEffect(() => {
     if (filter) {
@@ -40,12 +40,12 @@ const HeaderEvent = () => {
           <div
             className={`filter-container ${Dates ? "slide-in" : "slide-out"}`}
           >
-            <DatesFilter setDates={setDates} />
+            <DatesFilter setDates={setDates} setMonth={setMonth} />
           </div>
         )}
       </div>
       <header className="events-nav px-4 align-items-center d-flex">
-        <h1 className="flex-fill  text-center">October</h1>
+        <h1 className="flex-fill  text-center">{Month}</h1>
         <div className="gap-4 d-flex align-items-center">
           <svg
             width="20"
