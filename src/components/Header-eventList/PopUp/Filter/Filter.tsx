@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./filter.css";
 import Zones from "./Components/Zones";
 import Interest from "./Components/Interest";
@@ -14,6 +14,13 @@ const Filter: React.FC<FilterProps> = ({ setFilter }) => {
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const [minValue, setMinValue] = useState(0);
   const [maxValue, setMaxValue] = useState(500);
+  useEffect(()=>{
+    window.addEventListener("beforeunload", () => {
+      sessionStorage.removeItem("monthFilter");
+      sessionStorage.removeItem("filter");
+
+    });
+  },[])
   return (
     <div className="position-absolute filter filter-content">
       <nav className="bg-light d-flex align-items-center px-3">
