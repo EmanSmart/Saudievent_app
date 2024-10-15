@@ -1,12 +1,13 @@
-import EventList from "../components/event-list/EventList";
-import "./Layout.css";
-import HeaderEvent from "../components/Header-eventList/Header/HeaderEvent";
+// import EventList from "../components/event-list/EventList";
+
+// import HeaderEvent from "../components/Header-eventList/Header/HeaderEvent";
 
 const Layout = () => {
   return (
-    <div className="layout">
-      <HeaderEvent />
-      <EventList />
+    <div >
+      <h2>test layout</h2>
+      {/* <HeaderEvent />
+      <EventList /> */}
     </div>
   );
 };
