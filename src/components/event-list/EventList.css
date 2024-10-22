@@ -14,3 +14,12 @@
   border-radius: 24px;
   color: white;
 }
+#dropdownMenuButton1{
+  background-color: transparent;
+}
+.apply{
+  background-color: #df2a57;
+  border-style: none;
+  width: 200px;
+  padding: 3px;
+}
