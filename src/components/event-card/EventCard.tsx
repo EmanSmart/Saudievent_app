@@ -9,7 +9,7 @@ interface EventCardProps {
 
 const EventCard: React.FC<EventCardProps> = ({ title, date, image, time }) => {
   return (
-    <div className="card mb-4 mx-4">
+    <div className="event-card mb-4 mx-4">
       <div className="row g-0">
         <div className="col-4 m-auto">
           <img src={image} className="card-img" alt="event image" />
@@ -36,7 +36,7 @@ const EventCard: React.FC<EventCardProps> = ({ title, date, image, time }) => {
               </small>
             </p>
 
-            <div className="w-100 d-flex justify-content-end">
+            <div className="w-100 d-flex justify-content-start">
               <Link to={'/event-details'} className="card-btn btn btn-primary">View Details</Link>
             </div>
 

@@ -2,10 +2,10 @@
   height: 100vh;
   overflow-y: scroll;
 } */
-.time {
+/* .time {
   min-height: 50px;
-}
-.time-card {
+} */
+/* .time-card {
   background-color: #f48337;
   width: 50px;
   margin: auto;
@@ -13,11 +13,12 @@
   padding: 12px;
   border-radius: 24px;
   color: white;
-}
-#dropdownMenuButton1{
+} */
+#dropdownMenuButton1 {
   background-color: transparent;
 }
-.apply{
+
+.col .apply {
   background-color: #df2a57;
   border-style: none;
   width: 200px;
