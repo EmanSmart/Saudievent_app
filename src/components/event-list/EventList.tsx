@@ -109,7 +109,7 @@ const EventList = () => {
         </div>
       </div> */}
       <div className="row m-0 mb-5">
-        <div className="col">
+        <div className="col ">
           <div className="dropdown col-12 my-2">
             <button
               className="btn btn-secondary dropdown-toggle w-100"
