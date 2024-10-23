@@ -5,7 +5,7 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IoLocationOutline } from "react-icons/io5";
 import { LuClock3 } from "react-icons/lu";
 import { MdOutlineDateRange } from "react-icons/md";
-import "./eventDetails.css"
+import "./eventDetails.css";
 export default function EventDetails() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showDates, setShowDates] = useState(false);
@@ -39,9 +39,7 @@ export default function EventDetails() {
   const otherDates = CalenderDates.length > 0 ? CalenderDates.slice(1) : null;
 
   return (
-    <div
-    className="container-eventDetails"
-    >
+    <div className="container-eventDetails">
       <div
         style={{
           minHeight: "80vh",
@@ -58,27 +56,19 @@ export default function EventDetails() {
           width={"100%"}
           className="position-absolute inset-0"
         />
-        <div
-          className="position-absolute  left-0 w-100 event-overlay-1"
-       
-        ></div>
-        <div
-          className="position-absolute  left-0 w-100 top-0 event-overlay-2"
-       
-        ></div>
+        <div className="position-absolute  left-0 w-100 event-overlay-1"></div>
+        <div className="position-absolute  left-0 w-100 top-0 event-overlay-2"></div>
         <Container
           className="d-flex flex-column justify-content-end h-100"
           style={{ minHeight: "inherit" }}
         >
-          <div
-            className="d-flex align-items-center flex-column gap-3 flex-fill justify-content-center z-50 position-relative event-actions"
-          >
+          <div className="d-flex align-items-center flex-column gap-3 flex-fill justify-content-center z-50 position-relative event-actions">
             <div className="d-flex flex-column justify-content-center text-align-center align-items-center ">
-              <FaHeart size={27} role="button"/>
+              <FaHeart size={27} role="button" />
               <p className="fs-14">FAV</p>
             </div>
             <div className="d-flex flex-column justify-content-center text-align-center align-items-center">
-              <FaShareAlt size={27}  role="button"/>
+              <FaShareAlt size={27} role="button" />
               <p className="fs-14">Share</p>
             </div>
           </div>
@@ -96,7 +86,7 @@ export default function EventDetails() {
               <div className="d-flex flex-column flex-fill">
                 <div className="d-flex align-items-start gap-3 my-2">
                   <div
-                    style={{  width: "40%" }}
+                    style={{ width: "40%" }}
                     className="d-flex align-items-center gap-2 fs-14"
                   >
                     <MdOutlineDateRange size={24} />
@@ -127,7 +117,7 @@ export default function EventDetails() {
                       </div>
                       <div
                         className="d-flex align-items-center gap-2 fs-14"
-                        style={{  width: "60%" }}
+                        style={{ width: "60%" }}
                       >
                         <LuClock3 size={24} />
                         <span>{date.time}</span>
@@ -143,15 +133,15 @@ export default function EventDetails() {
                       size={30}
                       className="d-block ms-auto"
                       onClick={toggleDates}
-role="button"
-                      />
+                      role="button"
+                    />
                   ) : (
                     <IoIosArrowDown
                       size={30}
                       className="d-block ms-auto"
                       onClick={toggleDates}
                       role="button"
-                      />
+                    />
                   )}
                 </div>
               )}
@@ -194,12 +184,8 @@ role="button"
           </Col>
         </Row>
       </Container>
-      <div
-        className="position-sticky d-flex justify-content-center event-btn-container"
-      >
-        <Button
-          className=" rounded-pill  py-2   px-3 "
-        >
+      <div className="position-sticky d-flex justify-content-center event-btn-container">
+        <Button className=" rounded-pill  py-2   px-3 ">
           Tickets Inside The Zone
         </Button>
       </div>

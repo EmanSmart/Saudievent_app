@@ -37,6 +37,6 @@
   border:3px solid #df2b58 !important;
 }
 .event-btn-container button:hover {
-  background-color: transparent;
+  background-color: #2e245a;
   transition: all 0.5s;
 }
