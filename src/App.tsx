@@ -1,4 +1,4 @@
-import { Routes, Route, BrowserRouter as Router } from "react-router-dom"; 
+import { Routes, Route, HashRouter as Router } from "react-router-dom"; 
 import Layout from "./layout/Layout";
 import EventDetails from "./components/event-details/eventDetails.tsx";
 import "bootstrap/dist/css/bootstrap.min.css";
