@@ -37,9 +37,10 @@ const EventCard: React.FC<EventCardProps> = ({ title, date, image, time }) => {
             </p>
 
             <div className="w-100 d-flex justify-content-start">
-              <Link to={'/event-details'} className="card-btn btn btn-primary">View Details</Link>
+              <Link to={"/event-details"} className="card-btn btn btn-primary">
+                View Details
+              </Link>
             </div>
-
           </div>
         </div>
       </div>

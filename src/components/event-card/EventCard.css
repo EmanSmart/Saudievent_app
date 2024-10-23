@@ -6,7 +6,7 @@
   border-radius: 15px;
 }
 
-.event-card .card-btn{
+.event-card .card-btn {
   background-color: #f48337;
   border-style: none;
   border-radius: 20px;
@@ -19,16 +19,15 @@
 }
 .event-card .card-img {
   border-radius: 10px;
-    height: 120px;
-    border: 1px solid white;
+  height: 120px;
+  border: 1px solid white;
 }
-.event-card .card-title{
+.event-card .card-title {
   margin-left: 0;
   padding-left: 0;
 }
-.event-card .event-icon{
+.event-card .event-icon {
   width: 25px;
   height: 20px;
   padding: 3px;
-  
 }
