@@ -3,6 +3,7 @@ import Layout from "./layout/Layout";
 import EventDetails from "./components/event-details/eventDetails.tsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
+import './App.css';
 
 function App() {
   return (

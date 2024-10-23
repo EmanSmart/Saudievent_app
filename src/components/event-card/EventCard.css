@@ -1,4 +1,4 @@
-.card {
+.event-card {
   background-color: transparent;
   color: white;
   border-style: none;
@@ -6,27 +6,27 @@
   border-radius: 15px;
 }
 
-.card-btn {
+.event-card .card-btn{
   background-color: #f48337;
   border-style: none;
   border-radius: 20px;
   font-size: smaller;
   font-weight: 500;
-  height: 25px;
+  height: 20px;
   width: 110px;
   padding: 0;
   font-size: 12px;
 }
-.card-img {
+.event-card .card-img {
   border-radius: 10px;
     height: 120px;
     border: 1px solid white;
 }
-.card-title{
+.event-card .card-title{
   margin-left: 0;
   padding-left: 0;
 }
-.event-icon{
+.event-card .event-icon{
   width: 25px;
   height: 20px;
   padding: 3px;
