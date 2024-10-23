@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./EventCard.css";
 interface EventCardProps {
     title: string;
@@ -20,7 +21,7 @@ interface EventCardProps {
               <small>{date}</small>
             </p>
             <div className="w-100 d-flex justify-content-end">
-              <button className="card-btn btn btn-primary">View Details</button>
+              <Link to={'/event-details'} className="card-btn btn btn-primary">View Details</Link>
             </div>
           </div>
         </div>

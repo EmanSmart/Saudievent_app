@@ -1,0 +1,42 @@
+.container-eventDetails {
+  background-color: #2e245a;
+  min-height: 100vh;
+  color: #fff;
+}
+.container-eventDetails .event-overlay-1 {
+  left: 0;
+  height: 40vh;
+  top: 46vh;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #2e245a 100%);
+}
+.container-eventDetails .event-overlay-2 {
+  left: 0;
+  height: 85vh;
+  background: #2e245a;
+  opacity: 0.3;
+}
+.container-eventDetails .event-actions {
+  width: fit-content;
+  margin-left: auto;
+  height: 70vh;
+}
+.event-actions > div:hover p {
+  color: #df2b58;
+}
+.event-actions > div:hover svg {
+  color: #df2b58;
+}
+.container-eventDetails .event-btn-container {
+  bottom: 20px;
+  margin-top: 70px;
+  margin-bottom: 70px;
+}
+.container-eventDetails button {
+  background: #df2b58;
+  flex-grow: .5;
+  border:3px solid #df2b58 !important;
+}
+.event-btn-container button:hover {
+  background-color: transparent;
+  transition: all 0.5s;
+}
