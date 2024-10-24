@@ -127,7 +127,7 @@ export default function EventDetails() {
               </div>
 
               {otherDates && otherDates?.length > 0 && (
-                <div className="flex-fill">
+                <div className="">
                   {showDates ? (
                     <IoIosArrowUp
                       size={30}
