@@ -3,6 +3,11 @@
   background-size:contain;
   background-repeat: no-repeat;
 }
+.menu_style{
+  max-height: 50vh;
+  overflow-y: auto;
+  overflow-x: auto;
+}
 /* .time {
   min-height: 50px;
 } */
