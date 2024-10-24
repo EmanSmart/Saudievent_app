@@ -215,7 +215,7 @@ useEffect(() => {
                 aria-labelledby="dropdownMenuButton1"
 
               >
-                {Intersts.map((Interst) => (
+                {Intersts.map((Interst ) => (
                   <li key={Interst._id} className="dropdown-item"
                   onClick={() => handleInterestChange( Interst.name)}
                   >
@@ -267,8 +267,9 @@ useEffect(() => {
         </div>
       </div>
       <div className="card-col  ">
-        {events.map((event) => (
+        {events.map((event , index) => (
           <EventCard
+            key={index}
             title={event.title}
             date={event.date}
             image={event.img}
