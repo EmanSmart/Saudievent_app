@@ -187,7 +187,7 @@ useEffect(() => {
               <span>{selectedSeasonTitle}</span>
              
             </button>
-            <ul className="menu_style dropdown-menu w-100" aria-labelledby="dropdownMenuButton1">
+            <ul  style={{ maxHeight: "150px", minHeight:"100px"}} className=" dropdown-menu w-100 overflow-auto" aria-labelledby="dropdownMenuButton1">
               {seasons.map((season: Season, index) => (
                 <li
                   className="dropdown-item"
@@ -211,8 +211,9 @@ useEffect(() => {
                 {selectedInterstTitle}
               </button>
               <ul
-                className="menu_style dropdown-menu w-100"
+                className=" dropdown-menu w-100 overflow-auto"
                 aria-labelledby="dropdownMenuButton1"
+                style={{ maxHeight: "150px", minHeight:"100px"}}
 
               >
                 {Intersts.map((Interst ) => (
@@ -236,8 +237,9 @@ useEffect(() => {
                 {selectedZoneTitle}
               </button>
               <ul
-                className="menu_style dropdown-menu w-100"
+                className=" dropdown-menu w-100 overflow-auto"
                 aria-labelledby="dropdownMenuButton1"
+                style={{ maxHeight: "150px", minHeight:"100px"}}
               >
                 {zones.map((zone) => (
                   <li key={zone._id} className="dropdown-item"

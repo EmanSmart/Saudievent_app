@@ -42,7 +42,7 @@ export default function EventDetails() {
     <div className="container-eventDetails">
       <div
         style={{
-          minHeight: "80vh",
+          minHeight: "618px",
           // backgroundImage:
           //   'url("https://cdn.prod.website-files.com/60414b21f1ffcdbb0d5ad688/65bd3f2ed08408ced197152d_restaurant-terms.jpg")',
           // backgroundSize: "cover",
@@ -51,8 +51,8 @@ export default function EventDetails() {
       >
         <img
           src="https://cdn.prod.website-files.com/60414b21f1ffcdbb0d5ad688/65bd3f2ed08408ced197152d_restaurant-terms.jpg"
-          height={"85vh"}
-          style={{ height: "85vh" }}
+          height={"600px"}
+          style={{ height: "600px" }}
           width={"100%"}
           className="position-absolute inset-0"
         />
@@ -174,7 +174,7 @@ export default function EventDetails() {
         <Row className="mt-3">
           <Col>
             <h5>Gallery</h5>
-            <Card style={{ width: "8rem" }} className="mt-2">
+            <Card style={{ width: "150px" }} className="mt-2">
               <Card.Img
                 variant="top"
                 src="https://via.placeholder.com/150"

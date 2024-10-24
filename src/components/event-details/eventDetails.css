@@ -5,8 +5,8 @@
 }
 .container-eventDetails .event-overlay-1 {
   left: 0;
-  height: 40vh;
-  top: 46vh;
+  height: 293px;
+  top: 315px;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #2e245a 100%);
 }
 .container-eventDetails .event-overlay-2 {
