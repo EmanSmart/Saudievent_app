@@ -1,24 +1,24 @@
 .container-eventDetails {
   background-color: #2e245a;
-  min-height: 100vh;
+  min-height: 600px;
   color: #fff;
 }
 .container-eventDetails .event-overlay-1 {
   left: 0;
   height: 293px;
-  top: 315px;
+  top: 307px;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #2e245a 100%);
 }
 .container-eventDetails .event-overlay-2 {
   left: 0;
-  height: 85vh;
+  height: 603px;
   background: #2e245a;
-  opacity: 0.3;
+  opacity: 0.4;
 }
 .container-eventDetails .event-actions {
   width: fit-content;
   margin-left: auto;
-  height: 70vh;
+  height: 510px;
 }
 .event-actions > div:hover p {
   color: #df2b58;
