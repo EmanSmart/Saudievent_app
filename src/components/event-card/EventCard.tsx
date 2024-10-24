@@ -20,7 +20,7 @@ const EventCard: React.FC<EventCardProps> = ({ title, date, image, time }) => {
             <p className="card-text">
               <small className="row d-flex align-items-center">
                 <img
-                  src="/images/calendar-days-solid.svg"
+                  src="./images/calendar-days-solid.svg"
                   className="event-icon"
                   alt=""
                 />
@@ -28,7 +28,7 @@ const EventCard: React.FC<EventCardProps> = ({ title, date, image, time }) => {
               </small>
               <small className="row d-flex align-items-center">
                 <img
-                  src="/images/clock-regular.svg"
+                  src="./images/clock-regular.svg"
                   className="event-icon"
                   alt=""
                 />

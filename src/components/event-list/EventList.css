@@ -25,9 +25,14 @@
   background-color: transparent;
 }
 
+
 .col .apply {
   background-color: #df2a57;
   border-style: none;
   width: 200px;
   padding: 3px;
+}
+.col .clear{
+  background-color: #d2c5c879;
+  border-style: none;
 }

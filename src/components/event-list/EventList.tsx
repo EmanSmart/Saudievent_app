@@ -199,8 +199,8 @@ useEffect(() => {
               ))}
             </ul>
           </div>
-          <div className="row m-0 p-0 d-flex">
-            <div className="dropdown col-6 p-0">
+          <div className="row m-0 p-0 d-flex gap-2">
+            <div className="dropdown col p-0">
               <button
                 className="btn btn-secondary dropdown-toggle w-100 overflow-hidden"
                 type="button"
@@ -224,7 +224,7 @@ useEffect(() => {
                 ))}
               </ul>
             </div>
-            <div className="dropdown col-6 p-0">
+            <div className="dropdown col p-0">
               <button
                 className="btn btn-secondary dropdown-toggle w-100 overflow-hidden"
                 type="button"
@@ -252,7 +252,7 @@ useEffect(() => {
 
           <div className=" d-flex justify-content-between mt-2">
 
-            <button type="button" className="btn btn-primary apply w-50 mx-1 fw-bold" style={{backgroundColor: "#ccc"}}
+            <button type="button" className="btn btn-primary clear w-50 mx-1 fw-bold"
                   onClick={() => handleClearAll()}
           
             >
