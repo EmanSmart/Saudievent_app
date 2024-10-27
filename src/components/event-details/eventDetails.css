@@ -3,22 +3,25 @@
   min-height: 600px;
   color: #fff;
 }
+.container-eventDetails h2 {
+  font-size: 24px;
+}
 .container-eventDetails .event-overlay-1 {
   left: 0;
-  height: 293px;
-  top: 307px;
+  height: 210px;
+  top: 212px;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, #2e245a 100%);
 }
 .container-eventDetails .event-overlay-2 {
   left: 0;
-  height: 603px;
+  height: 430px;
   background: #2e245a;
   opacity: 0.4;
 }
 .container-eventDetails .event-actions {
   width: fit-content;
   margin-left: auto;
-  height: 510px;
+  height: 335px;
 }
 .event-actions > div:hover p {
   color: #df2b58;
@@ -30,12 +33,37 @@
   bottom: 25px;
   margin-top: 70px;
 }
-.container-eventDetails button {
+.container-eventDetails a {
   background: #df2b58;
-  flex-grow: .5;
-  border:3px solid #df2b58 !important;
+  flex-grow: 0.5;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  border: 3px solid #df2b58 !important;
 }
-.event-btn-container button:hover {
+.event-btn-container a:hover {
   background-color: #2e245a;
   transition: all 0.5s;
+}
+svg.logo {
+  z-index: 46;
+  position: absolute;
+  left: 10px;
+  top: 30px;
+}
+.fs-11 {
+  font-size: 11px;
+}
+.w-40 {
+  width: 40%;
+}
+.w-60 {
+  width: 60%;
+}
+.z-10 {
+  z-index: 10;
+}
+.ReadMore {
+  float: right;
+  color: #f48337;
 }
