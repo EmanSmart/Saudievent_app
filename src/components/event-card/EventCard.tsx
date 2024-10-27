@@ -1,13 +1,17 @@
 import { Link } from "react-router-dom";
+// import { useState, useEffect } from 'react';
+
 import "./EventCard.css";
 interface EventCardProps {
+  id: number;
   title: string;
   date: string;
   image: string;
   time: string;
 }
 
-const EventCard: React.FC<EventCardProps> = ({ title, date, image, time }) => {
+const EventCard: React.FC<EventCardProps> = ({id , title, date, image, time }) => {
+
   return (
     <div className="event-card mb-4 mx-4">
       <div className="row g-0">
@@ -37,7 +41,7 @@ const EventCard: React.FC<EventCardProps> = ({ title, date, image, time }) => {
             </p>
 
             <div className="w-100 d-flex justify-content-start">
-              <Link to={"/event/668120985c6b92733d6e1ee0"} className="card-btn btn btn-primary">
+              <Link to={`/event/${id}`} className="card-btn btn btn-primary">
                 View Details
               </Link>
             </div>

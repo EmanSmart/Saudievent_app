@@ -3,11 +3,11 @@ import EventCard from "../event-card/EventCard";
 import "./EventList.css";
 
 interface Event {
-  id: number;
-  date: string;
+  _id: number;
+  startDate: string;
   time: string;
-  title: string;
-  img: string;
+  name: string;
+  appWebHeroImage: string;
 }
 interface Season {
   _id: string;
@@ -22,70 +22,71 @@ interface Interst {
   _id: string;
   name: string;
 }
-const events: Event[] = [
-  {
-    id: 1,
-    date: "10 Oct - 13 Oct",
-    time: "11 PM - 1AM",
-    title: "Event 1",
-    img: "images/image.jpeg",
-  },
-  {
-    id: 2,
-    date: "10 Oct - 13 Oct",
-    time: "11 PM - 1AM",
-    title: "Event 1",
-    img: "images/image.jpeg",
-  },
-  {
-    id: 3,
-    date: "10 Oct - 13 Oct",
-    time: "11 PM - 1AM",
-    title: "Event 1",
-    img: "images/image.jpeg",
-  },
-  {
-    id: 4,
-    date: "10 Oct - 13 Oct",
-    time: "11 PM - 1AM",
-    title: "Event 1",
-    img: "images/image.jpeg",
-  },
-  {
-    id: 4,
-    date: "10 Oct - 13 Oct",
-    time: "11 PM - 1AM",
-    title: "Event 1",
-    img: "images/image.jpeg",
-  },
-  {
-    id: 4,
-    date: "10 Oct - 13 Oct",
-    time: "11 PM - 1AM",
-    title: "Event 1",
-    img: "images/image.jpeg",
-  },
-  {
-    id: 4,
-    date: "10 Oct - 13 Oct",
-    time: "11 PM - 1AM",
-    title: "Event 1",
-    img: "images/image.jpeg",
-  },
-];
+// const events: Event[] = [
+//   {
+//     id: 1,
+//     date: "10 Oct - 13 Oct",
+//     time: "11 PM - 1AM",
+//     title: "Event 1",
+//     img: "images/image.jpeg",
+//   },
+//   {
+//     id: 2,
+//     date: "10 Oct - 13 Oct",
+//     time: "11 PM - 1AM",
+//     title: "Event 1",
+//     img: "images/image.jpeg",
+//   },
+//   {
+//     id: 3,
+//     date: "10 Oct - 13 Oct",
+//     time: "11 PM - 1AM",
+//     title: "Event 1",
+//     img: "images/image.jpeg",
+//   },
+//   {
+//     id: 4,
+//     date: "10 Oct - 13 Oct",
+//     time: "11 PM - 1AM",
+//     title: "Event 1",
+//     img: "images/image.jpeg",
+//   },
+//   {
+//     id: 4,
+//     date: "10 Oct - 13 Oct",
+//     time: "11 PM - 1AM",
+//     title: "Event 1",
+//     img: "images/image.jpeg",
+//   },
+//   {
+//     id: 4,
+//     date: "10 Oct - 13 Oct",
+//     time: "11 PM - 1AM",
+//     title: "Event 1",
+//     img: "images/image.jpeg",
+//   },
+//   {
+//     id: 4,
+//     date: "10 Oct - 13 Oct",
+//     time: "11 PM - 1AM",
+//     title: "Event 1",
+//     img: "images/image.jpeg",
+//   },
+// ];
 const URL = "/twk/";
 const EventList = () => {
   const [seasons, setSeasons] = useState([]);
   const [selectedSeasonId, setSelectedSeasonId] = useState<string>("");
   const [selectedSeasonTitle, setSelectedSeasonTitle] = useState<string>("All Seasons");
-  // const [selectedZoneId, setSelectedZoneId] = useState<string>("Zones");
+  const [selectedZoneId, setSelectedZoneId] = useState<string>("");
   const [selectedZoneTitle, setSelectedZoneTitle] = useState<string>("Zones");
-  // const [selectedInterstId, setSelectedInterstId] = useState<string>("Zones");
+  const [selectedInterstId, setSelectedInterstId] = useState<string>("");
   const [selectedInterstTitle, setSelectedInterestTitle] = useState<string>("Interest");
 
   const [zones, setZones] = useState<Zone[]>([]);
   const [Intersts, setIntersts] = useState<Interst[]>([]);
 
+// ==============season=============
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}${URL}season/active`)
       .then((response) => response.json())
@@ -139,18 +140,19 @@ useEffect(() => {
   }
 }, [selectedSeasonId]);
 
+// ========handel_Clicks
   const handleSeasonChange = (seasonId: string , seasonTitle: string) => {
     setSelectedSeasonId(seasonId);
     setSelectedSeasonTitle(seasonTitle);
     setZones(zones);
     setIntersts(Intersts)
   };
-  const handleZoneChange = ( zoneTitle: string) => {
-    // setSelectedZoneId(zoneId);
+  const handleZoneChange = ( zoneId:string , zoneTitle: string) => {
+    setSelectedZoneId(zoneId);
     setSelectedZoneTitle(zoneTitle);
   };
-  const handleInterestChange = ( interstTitle: string) => {
-    // setSelectedInterstId(interstId);
+  const handleInterestChange = (interstId:string , interstTitle: string) => {
+    setSelectedInterstId(interstId);
     setSelectedInterestTitle(interstTitle);
   };
   const handleClearAll=()=>{
@@ -159,6 +161,31 @@ useEffect(() => {
     setSelectedZoneTitle("Zones");
     setSelectedInterestTitle("Interest");
   }
+
+
+  // ======================events-list
+  const [events, setEvents] = useState<Event[]>([]);
+  useEffect(() => {
+    // console.log(selectedSeasonId ,"selectedSeasonId");
+    // console.log(selectedZoneId ,"selectedZoneId");
+    // console.log(selectedInterstId ,"selectedInterstId");
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/twk/event?seasonId=${selectedSeasonId}?zone_id=${selectedZoneId}?interst_id=${selectedInterstId}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch events');
+        }
+        // const events = response.events;
+        const {events }: { count: number, events: Event[] } = await response.json();
+        console.log(events, "events");
+        setEvents(events);
+      } catch (error) {
+        console.error('Error fetching events:', error);
+      }
+    };
+
+    fetchEvents();
+  }, [selectedSeasonId ,selectedZoneId , selectedInterstId]);
 
   return (
     <section className="container">
@@ -218,7 +245,7 @@ useEffect(() => {
               >
                 {Intersts.map((Interst ) => (
                   <li key={Interst._id} className="dropdown-item"
-                  onClick={() => handleInterestChange( Interst.name)}
+                  onClick={() => handleInterestChange(Interst._id , Interst.name)}
                   >
                     {Interst.name}
                   </li>
@@ -243,7 +270,7 @@ useEffect(() => {
               >
                 {zones.map((zone) => (
                   <li key={zone._id} className="dropdown-item"
-                  onClick={() => handleZoneChange( zone.name)}
+                  onClick={() => handleZoneChange(zone._id, zone.name)}
                   >
                     {zone.name}
                   </li>
@@ -268,13 +295,13 @@ useEffect(() => {
           </div>
         </div>
       </div>
-      <div className="card-col  ">
-        {events.map((event , index) => (
+      <div className="card-col">
+        {events.map((event) => (
           <EventCard
-            key={index}
-            title={event.title}
-            date={event.date}
-            image={event.img}
+            id={event._id}
+            title={event.name}
+            date={event.startDate}
+            image={event.appWebHeroImage}
             time={event.time}
           />
         ))}

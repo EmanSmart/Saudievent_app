@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState , useCallback } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
-import { FaHeart, FaShareAlt } from "react-icons/fa";
+import { FaShareAlt } from "react-icons/fa";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IoLocationOutline } from "react-icons/io5";
 import { LuClock3 } from "react-icons/lu";
@@ -109,6 +109,19 @@ export default function EventDetails() {
       .catch((error) => console.error("Error fetching event:", error));
   }, [text === ""]);
 
+
+  // ==================handel_share click
+  const handleShare = useCallback(() => {
+    const currentUrl = window.location.href;
+    navigator.clipboard.writeText(currentUrl)
+      .then(() => {
+        // Optional: Show a success message
+        alert('Link copied to clipboard!');
+      })
+      .catch((err) => {
+        console.error('Failed to copy: ', err);
+      });
+  }, []);
   return (
     <div className="container-eventDetails position-relative z-10">
       <div
@@ -294,12 +307,12 @@ export default function EventDetails() {
           style={{ minHeight: "inherit" }}
         >
           <div className="d-flex align-items-center flex-column gap-3 flex-fill justify-content-center z-50 position-relative event-actions">
-            <div className="d-flex flex-column justify-content-center text-align-center align-items-center">
+            {/* <div className="d-flex flex-column justify-content-center text-align-center align-items-center">
               <FaHeart size={22} role="button" />
               <p className="fs-11">FAV</p>
-            </div>
+            </div> */}
             <div className="d-flex flex-column justify-content-center text-align-center align-items-center">
-              <FaShareAlt size={22} role="button" />
+              <FaShareAlt size={22} role="button" onClick={handleShare} />
               <p className="fs-11">Share</p>
             </div>
           </div>
