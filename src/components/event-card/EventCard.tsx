@@ -24,20 +24,21 @@ const formatTime = (startTime: string, endTime: string) => {
 
   return `${formattedStartTime} - ${formattedEndTime}`;
 };
-
 const formatDate = (startDate: string, endDate: string) => {
-  const formattedStartDate = new Date(startDate).toLocaleDateString("en-US", {
+  const formattedStartDate = new Date(startDate).toLocaleDateString("en-GB", {
     day: "numeric",
     month: "short",
   });
 
-  const formattedEndDate = new Date(endDate).toLocaleDateString("en-US", {
+  const formattedEndDate = new Date(endDate).toLocaleDateString("en-GB", {
     day: "numeric",
     month: "short",
   });
 
   return `${formattedStartDate} - ${formattedEndDate}`;
 };
+
+
   return (
     <div className="event-card mb-4 mx-4">
       <div className="row g-0">

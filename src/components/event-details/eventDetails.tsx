@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState , useCallback } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { FaShareAlt } from "react-icons/fa";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
@@ -8,17 +8,16 @@ import { MdOutlineDateRange } from "react-icons/md";
 import "./eventDetails.css";
 import { Link, useParams } from "react-router-dom";
 import LoadingSkeleton from "../Skelton";
-
 export default function EventDetails() {
   const { id } = useParams();
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [showDates, setShowDates] = useState<boolean>(false);
+  const [visibleDatesCount, setVisibleDatesCount] = useState(7); // Track visible dates.
+  const [calendarDates, setCalendarDates] = useState<CalendarDate[]>([]);
+  const [data, setData] = useState<EventData["event"] | null>(null);
   const textRef = useRef<HTMLParagraphElement | null>(null);
   const [text, setText] = useState<string>("");
   const maxChars: number = 95;
-
-  const [data, setData] = useState<EventData["event"] | null>(null);
-  const [calendarDates, setCalendarDates] = useState<CalendarDate[]>([]);
 
   interface EventTime {
     startTime: string;
@@ -50,23 +49,28 @@ export default function EventDetails() {
   const toggleReadMore = () => {
     if (!isExpanded || text.length <= maxChars) {
       textRef.current!.innerHTML = text;
-    } else if (textRef.current) {
-      textRef.current.innerHTML = `${text.substring(0, maxChars)}...`;
+    } else {
+      textRef.current!.innerHTML = `${text.substring(0, maxChars)}...`;
     }
     setIsExpanded(!isExpanded);
   };
 
-  const toggleDates = () => setShowDates((prev) => !prev);
+  const toggleDates = () => {
+    setShowDates((prev) => !prev)
+    setVisibleDatesCount(7)
+  }
+
+  const loadMoreDates = () => {
+    setVisibleDatesCount((prev) => prev + 7);
+  };
 
   const renderText = () => {
     if (isExpanded || text.length <= maxChars) {
       textRef.current!.innerHTML = text;
-    } else if (textRef.current) {
-      textRef.current.innerHTML = `${text.substring(0, maxChars)}...`;
+    } else {
+      textRef.current!.innerHTML = `${text.substring(0, maxChars)}...`;
     }
   };
-
-  const isTruncated: boolean = text.length > maxChars;
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/twk/event/${id}`)
@@ -77,7 +81,7 @@ export default function EventDetails() {
 
         const dates: CalendarDate[] = data.event.eventDate.map((event) => {
           const startDate = new Date(event.startDate);
-          const formattedDate = startDate.toLocaleDateString("en-US", {
+          const formattedDate = startDate.toLocaleDateString("en-GB", {
             day: "numeric",
             month: "short",
           });
@@ -97,18 +101,17 @@ export default function EventDetails() {
             }
           );
 
-          return {
-            day: formattedDate,
-            time: `${startTime} - ${endTime}`,
-          };
+          return { day: formattedDate, time: `${startTime} - ${endTime}` };
         });
 
         setCalendarDates(dates);
         renderText();
       })
       .catch((error) => console.error("Error fetching event:", error));
-  }, [text === ""]);
+  }, [id, text]);
 
+  const isTruncated: boolean = text.length > maxChars;
+  const hasMoreDates = visibleDatesCount < calendarDates.length;
 
   // ==================handel_share click
   const handleShare = useCallback(() => {
@@ -335,9 +338,7 @@ export default function EventDetails() {
                   <div className="d-flex align-items-center gap-2 fs-14 w-40">
                     <MdOutlineDateRange size={22} />
                     {data ? (
-                      <span className="fs-11">
-                        {calendarDates && calendarDates[0]?.day}
-                      </span>
+                      <span className="fs-11">{calendarDates[0]?.day}</span>
                     ) : (
                       <LoadingSkeleton />
                     )}
@@ -345,9 +346,7 @@ export default function EventDetails() {
                   <div className="d-flex align-items-center gap-2 w-60">
                     <LuClock3 size={22} />
                     {data ? (
-                      <span className="fs-11">
-                        {calendarDates && calendarDates[0]?.time}
-                      </span>
+                      <span className="fs-11">{calendarDates[0]?.time}</span>
                     ) : (
                       <LoadingSkeleton />
                     )}
@@ -355,29 +354,31 @@ export default function EventDetails() {
                 </div>
 
                 {showDates &&
-                  calendarDates &&
-                  calendarDates.map(
-                    (date, index) =>
-                      index !== 0 && (
-                        <div
-                          key={index}
-                          className="d-flex align-items-start gap-3 my-2"
-                        >
-                          <div className="d-flex align-items-center gap-2 w-40 fs-11">
-                            <MdOutlineDateRange size={22} />
-                            <span>{date?.day}</span>
-                          </div>
-                          <div className="d-flex align-items-center gap-2 w-60 fs-11">
-                            <LuClock3 size={22} />
-                            <span>{date?.time}</span>
-                          </div>
-                        </div>
-                      )
-                  )}
+                  calendarDates.slice(1, visibleDatesCount).map((date, index) => (
+                    <div
+                      key={index}
+                      className="d-flex align-items-start gap-3 my-2"
+                    >
+                      <div className="d-flex align-items-center gap-2 w-40 fs-11">
+                        <MdOutlineDateRange size={22} />
+                        <span>{date.day}</span>
+                      </div>
+                      <div className="d-flex align-items-center gap-2 w-60 fs-11">
+                        <LuClock3 size={22} />
+                        <span>{date.time}</span>
+                      </div>
+                    </div>
+                  ))}
+
+                {hasMoreDates && showDates&&(
+                  <p role="button" onClick={loadMoreDates} className="text-center mt-2">
+                    show More
+                  </p>
+                )}
               </div>
 
-              {calendarDates && calendarDates?.length > 0 && (
-                <div className="">
+              {calendarDates.length > 0 && (
+                <div>
                   {showDates ? (
                     <IoIosArrowUp
                       size={30}
@@ -549,12 +550,12 @@ export default function EventDetails() {
         </svg>
       </div>
 
-      <div className="position-sticky d-flex justify-content-center event-btn-container">
+      <div className="position-sticky d-flex justify-content-center event-btn-container" style={{zIndex:"5000"}}>
         {data ? (
           <Link
             to={data?.ticket_mix_url || "#"}
-            className=" rounded-pill  py-2   px-1 "
-            style={{ fontSize: "15px" }}
+            className=" rounded-pill  py-2   px-1 position-fixed "
+            style={{ fontSize: "15px" ,width:'70%',bottom:"25px"}}
           >
             {data?.buttonName}
           </Link>
