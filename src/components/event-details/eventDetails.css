@@ -65,5 +65,10 @@ svg.logo {
 }
 .ReadMore {
   float: right;
+  width: 70px !important;
+  text-wrap: nowrap;
   color: #f48337;
+}
+.container-eventDetails p{
+  margin: 0;
 }

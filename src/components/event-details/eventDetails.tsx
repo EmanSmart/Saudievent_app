@@ -370,7 +370,7 @@ export default function EventDetails() {
                     </div>
                   ))}
 
-                {hasMoreDates && showDates&&(
+                {hasMoreDates && showDates && (
                   <p role="button" onClick={loadMoreDates} className="text-center mt-2">
                     show More
                   </p>
@@ -405,22 +405,22 @@ export default function EventDetails() {
         <Row className="mt-4">
           <Col>
             <h5 style={{ fontSize: "16px" }}>About event</h5>
-            <div className="d-inline-block w-100" style={{ maxWidth: "304px" }}>
+            <div className="d-flex gap-2 align-items-end">
               {data ? (
-                <p className="mb-1 d-inline fs-11" ref={textRef}></p>
+                <p className="mb-1 fs-11" ref={textRef}></p>
               ) : (
                 <LoadingSkeleton />
               )}
+              {isTruncated && (
+                <span
+                  role="button"
+                  onClick={toggleReadMore}
+                  className="p-0 fs-11 ReadMore"
+                >
+                  {isExpanded ? "See Less" : "See More"}
+                </span>
+              )}
             </div>
-            {isTruncated && (
-              <span
-                role="button"
-                onClick={toggleReadMore}
-                className="p-0 ps-3 fs-11 ReadMore"
-              >
-                {isExpanded ? "See Less" : "See More"}
-              </span>
-            )}
           </Col>
         </Row>
 
@@ -432,13 +432,15 @@ export default function EventDetails() {
               className="mt-2"
             >
               {data ? (
-                <Card.Img
-                  variant="top"
-                  src={data?.image![0]}
-                  alt="Event"
-                  width={"100%"}
-                  height={"100%"}
-                />
+                data?.image?.map((i) => {
+                  return <Card.Img
+                    variant="top"
+                    src={i}
+                    alt="Event"
+                    width={"100%"}
+                    height={"100%"}
+                  />
+                })
               ) : (
                 <LoadingSkeleton img={true} />
               )}
@@ -451,7 +453,7 @@ export default function EventDetails() {
         style={{ right: 0 }}
       >
         <svg
-          style={{ marginBottom: "-50px" }}
+          style={{ marginBottom: "-86px" }}
           xmlns="http://www.w3.org/2000/svg"
           width="145"
           height="310"
@@ -550,18 +552,29 @@ export default function EventDetails() {
         </svg>
       </div>
 
-      <div className="position-sticky d-flex justify-content-center event-btn-container" style={{zIndex:"5000"}}>
+      <div className="position-sticky d-flex justify-content-center event-btn-container" style={{ zIndex: "5000" }}>
         {data ? (
-          <Link
-            to={data?.ticket_mix_url || "#"}
-            className=" rounded-pill  py-2   px-1 position-fixed "
-            style={{ fontSize: "15px" ,width:'70%',bottom:"25px"}}
-          >
-            {data?.buttonName}
-          </Link>
+          data.ticket_mix_url ? (
+            <Link
+              to={data.ticket_mix_url}
+              className="rounded-pill py-2 px-1 position-fixed"
+              style={{ fontSize: "15px", width: "70%", bottom: "25px" }}
+            >
+              {data.buttonName}
+            </Link>
+          ) : (
+            <button
+              disabled
+              className="rounded-pill py-2 px-1 position-fixed border-0"
+              style={{ fontSize: "15px", width: "70%", bottom: "25px", color: 'white', background: "gray" }}
+            >
+              {data.buttonName}
+            </button>
+          )
         ) : (
           <LoadingSkeleton />
         )}
+
       </div>
     </div>
   );
