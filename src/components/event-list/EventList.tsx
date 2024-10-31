@@ -3,7 +3,6 @@ import EventCard from "../event-card/EventCard";
 import "./EventList.css";
 import LoadingSkeleton from "../Skelton";
 
-
 interface Event {
   _id: number;
   name: string;
@@ -86,16 +85,16 @@ const URL = "/twk/";
 const EventList = () => {
   const [seasons, setSeasons] = useState([]);
   const [selectedSeasonId, setSelectedSeasonId] = useState<string>("");
-  const [selectedSeasonTitle, setSelectedSeasonTitle] = useState<string>("All Seasons");
+  const [selectedSeasonTitle, setSelectedSeasonTitle] =
+    useState<string>("All Seasons");
   const [selectedZoneId, setSelectedZoneId] = useState<string>("");
   const [selectedZoneTitle, setSelectedZoneTitle] = useState<string>("Zones");
   const [selectedInterstId, setSelectedInterstId] = useState<string>("");
-  const [selectedInterstTitle, setSelectedInterestTitle] = useState<string>("Interest");
+  const [selectedInterstTitle, setSelectedInterestTitle] =
+    useState<string>("Interest");
 
   const [zones, setZones] = useState<Zone[]>([]);
   const [Intersts, setIntersts] = useState<Interst[]>([]);
-
-
 
   // ==============season=============
   useEffect(() => {
@@ -118,9 +117,7 @@ const EventList = () => {
         })
         .catch((error) => console.error("Error fetching zones:", error));
     } else {
-      fetch(
-        `${import.meta.env.VITE_API_URL}${URL}zone`
-      )
+      fetch(`${import.meta.env.VITE_API_URL}${URL}zone`)
         .then((response) => response.json())
         .then((data) => {
           setZones(data.data);
@@ -132,7 +129,9 @@ const EventList = () => {
   useEffect(() => {
     if (selectedSeasonId) {
       fetch(
-        `${import.meta.env.VITE_API_URL}${URL}interest?seasonId=${selectedSeasonId}`
+        `${
+          import.meta.env.VITE_API_URL
+        }${URL}interest?seasonId=${selectedSeasonId}`
       )
         .then((response) => response.json())
         .then((data) => {
@@ -140,9 +139,7 @@ const EventList = () => {
         })
         .catch((error) => console.error("Error fetching Intersts:", error));
     } else {
-      fetch(
-        `${import.meta.env.VITE_API_URL}${URL}interest`
-      )
+      fetch(`${import.meta.env.VITE_API_URL}${URL}interest`)
         .then((response) => response.json())
         .then((data) => {
           setIntersts(data.data);
@@ -156,7 +153,7 @@ const EventList = () => {
     setSelectedSeasonId(seasonId);
     setSelectedSeasonTitle(seasonTitle);
     setZones(zones);
-    setIntersts(Intersts)
+    setIntersts(Intersts);
   };
   const handleZoneChange = (zoneId: string, zoneTitle: string) => {
     setSelectedZoneId(zoneId);
@@ -166,23 +163,32 @@ const EventList = () => {
     setSelectedInterstId(interstId);
     setSelectedInterestTitle(interstTitle);
   };
+
+  const [clearTrigger, setClearTrigger] = useState(false);
+
   const handleClearAll = () => {
     setSelectedSeasonId("");
     setSelectedSeasonTitle("All Seasons");
     setSelectedZoneTitle("Zones");
     setSelectedInterestTitle("Interest");
-    setSelectedZoneId("")
-    setSelectedInterstId("")
-    fetchEvents()
-  }
+    setSelectedZoneId("");
+    setSelectedInterstId("");
+    setClearTrigger((prev) => !prev); // Toggle this value to trigger useEffect
+  };
   const fetchEvents = async () => {
-    setEvents(null)
+    setEvents(null);
     try {
-      const seasonIdParam = selectedSeasonId ? `season_id=${selectedSeasonId}` : null;
+      const seasonIdParam = selectedSeasonId
+        ? `season_id=${selectedSeasonId}`
+        : null;
       const zoneIdParam = selectedZoneId ? `zone_id=${selectedZoneId}` : null;
-      const interestIdParam = selectedInterstId ? `interest_id=${selectedInterstId}` : null;
+      const interestIdParam = selectedInterstId
+        ? `interest_id=${selectedInterstId}`
+        : null;
 
-      const queryParams = [seasonIdParam, zoneIdParam, interestIdParam].filter(Boolean).join('&');
+      const queryParams = [seasonIdParam, zoneIdParam, interestIdParam]
+        .filter(Boolean)
+        .join("&");
 
       const url = `${import.meta.env.VITE_API_URL}/twk/event?${queryParams}`;
 
@@ -191,9 +197,9 @@ const EventList = () => {
       if (!response.ok) {
         throw new Error("Failed to fetch events");
       }
-      const { events }: { count: number; events: Event[] } = await response.json();
-      setEvents(events)
-
+      const { events }: { count: number; events: Event[] } =
+        await response.json();
+      setEvents(events);
     } catch (error) {
       console.error("Error fetching events:", error);
     }
@@ -203,13 +209,11 @@ const EventList = () => {
   const [events, setEvents] = useState<Event[] | null>();
 
   useEffect(() => {
-
     fetchEvents();
-  }, []);
+  }, [clearTrigger]);
 
   return (
     <section className="container">
-
       <div className="list row">
         {/* <div className="col-3">
         <div className="time">
@@ -232,9 +236,12 @@ const EventList = () => {
                 <span>All Seasons</span>
               )} */}
                 <span>{selectedSeasonTitle}</span>
-
               </button>
-              <ul style={{ maxHeight: "150px", minHeight: "100px" }} className=" dropdown-menu w-100 overflow-auto" aria-labelledby="dropdownMenuButton1">
+              <ul
+                style={{ maxHeight: "150px", minHeight: "100px" }}
+                className=" dropdown-menu w-100 overflow-auto"
+                aria-labelledby="dropdownMenuButton1"
+              >
                 {seasons.map((season: Season, index) => (
                   <li
                     className="dropdown-item"
@@ -261,11 +268,14 @@ const EventList = () => {
                   className=" dropdown-menu w-100 overflow-auto"
                   aria-labelledby="dropdownMenuButton1"
                   style={{ maxHeight: "150px", minHeight: "100px" }}
-
                 >
                   {Intersts.map((Interst) => (
-                    <li key={Interst._id} className="dropdown-item"
-                      onClick={() => handleInterestChange(Interst._id, Interst.name)}
+                    <li
+                      key={Interst._id}
+                      className="dropdown-item"
+                      onClick={() =>
+                        handleInterestChange(Interst._id, Interst.name)
+                      }
                     >
                       {Interst.name}
                     </li>
@@ -279,7 +289,7 @@ const EventList = () => {
                   id="dropdownMenuButton1"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
-                // disabled={!selectedSeasonId}
+                  // disabled={!selectedSeasonId}
                 >
                   {selectedZoneTitle}
                 </button>
@@ -289,7 +299,9 @@ const EventList = () => {
                   style={{ maxHeight: "150px", minHeight: "100px" }}
                 >
                   {zones.map((zone) => (
-                    <li key={zone._id} className="dropdown-item"
+                    <li
+                      key={zone._id}
+                      className="dropdown-item"
                       onClick={() => handleZoneChange(zone._id, zone.name)}
                     >
                       {zone.name}
@@ -300,54 +312,67 @@ const EventList = () => {
             </div>
 
             <div className=" d-flex justify-content-between mt-2">
-
-              <button type="button" className="btn btn-primary clear w-50 mx-1 fw-bold"
+              <button
+                type="button"
+                className="btn btn-primary clear w-50 mx-1 fw-bold"
                 onClick={() => handleClearAll()}
-
               >
                 Clear
               </button>
 
-              <button type="button"
+              <button
+                type="button"
                 // style={events==null && { background: 'gray' }}
                 disabled={events == null ? true : false}
-                onClick={() => fetchEvents()} className="btn btn-primary apply  w-50 mx-1 fw-bold">
-                {events ? 'Apply' : '...Apply'}
+                onClick={() => fetchEvents()}
+                className="btn btn-primary apply  w-50 mx-1 fw-bold"
+              >
+                {events ? "Apply" : "...Apply"}
               </button>
-
             </div>
           </div>
         </div>
         <div className="card-col">
           <div className="card-col">
-            {!events ? <>
-              <LoadingSkeleton /><LoadingSkeleton /><LoadingSkeleton /><LoadingSkeleton />     <LoadingSkeleton /><LoadingSkeleton /><LoadingSkeleton /><LoadingSkeleton /> <LoadingSkeleton /><LoadingSkeleton /><LoadingSkeleton /><LoadingSkeleton /> <LoadingSkeleton /><LoadingSkeleton /><LoadingSkeleton /><LoadingSkeleton />
-            </>
-              : events.length == 0 ?
-                <div className="text-center text-white pb-5">
-                  <p>No Events</p>
-                  <button type="button" className="btn btn-primary clear w-50 mx-1 fw-bold"
-                    onClick={() => handleClearAll()}
-                  >
-                    Clear
-                  </button>
-                </div>
-                :
-                events.map((event) => (
-                  <EventCard
-                    key={event._id}
-                    id={event._id}
-                    title={event.name}
-                    image={event.appWebHeroImage}
-                    dates={event.dates} // Pass the entire dates array
-                  />
-                ))
-            }
-
-
+            {!events ? (
+              <>
+                <LoadingSkeleton />
+                <LoadingSkeleton />
+                <LoadingSkeleton />
+                <LoadingSkeleton /> <LoadingSkeleton />
+                <LoadingSkeleton />
+                <LoadingSkeleton />
+                <LoadingSkeleton /> <LoadingSkeleton />
+                <LoadingSkeleton />
+                <LoadingSkeleton />
+                <LoadingSkeleton /> <LoadingSkeleton />
+                <LoadingSkeleton />
+                <LoadingSkeleton />
+                <LoadingSkeleton />
+              </>
+            ) : events.length == 0 ? (
+              <div className="text-center text-white pb-5">
+                <p>No Events</p>
+                <button
+                  type="button"
+                  className="btn btn-primary clear w-50 mx-1 fw-bold"
+                  onClick={() => handleClearAll()}
+                >
+                  Clear
+                </button>
+              </div>
+            ) : (
+              events.map((event) => (
+                <EventCard
+                  key={event._id}
+                  id={event._id}
+                  title={event.name}
+                  image={event.appWebHeroImage}
+                  dates={event.dates} // Pass the entire dates array
+                />
+              ))
+            )}
           </div>
-
-
         </div>
       </div>
     </section>
@@ -355,6 +380,3 @@ const EventList = () => {
 };
 
 export default EventList;
-
-
-
