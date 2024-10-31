@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import EventCard from "../event-card/EventCard";
 import "./EventList.css";
 
+
 interface Event {
   _id: number;
   name: string;
@@ -93,6 +94,8 @@ const EventList = () => {
   const [zones, setZones] = useState<Zone[]>([]);
   const [Intersts, setIntersts] = useState<Interst[]>([]);
 
+
+
   // ==============season=============
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}${URL}season/active`)
@@ -175,10 +178,17 @@ const EventList = () => {
 
   useEffect(() => {
     const fetchEvents = async () => {
+
       try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/twk/event?seasonId=${selectedSeasonId}&zone_id=${selectedZoneId}&interst_id=${selectedInterstId}`
-        );
+        const seasonIdParam = selectedSeasonId ? `season_id=${selectedSeasonId}` : '';
+        const zoneIdParam = selectedZoneId ? `zone_id=${selectedZoneId}` : '';
+        const interestIdParam = selectedInterstId ? `interest_id=${selectedInterstId}` : '';
+
+        const queryParams = [seasonIdParam, zoneIdParam, interestIdParam].filter(Boolean).join('&');
+
+        const url = `${import.meta.env.VITE_API_URL}/twk/event?${queryParams}`;
+
+        const response = await fetch(url);
 
         if (!response.ok) {
           throw new Error("Failed to fetch events");
@@ -306,7 +316,18 @@ const EventList = () => {
         </div>
         <div className="card-col">
           <div className="card-col">
-            {events.map((event) => (
+          {
+            events.length==0  ? 
+            <div className="text-center text-white pb-5">
+              <p>No Events</p>
+              <button type="button" className="btn btn-primary clear w-50 mx-1 fw-bold"
+                onClick={() => handleClearAll()}
+              >
+                Clear
+              </button>
+            </div>
+            :
+            events.map((event) => (
               <EventCard
                 key={event._id}
                 id={event._id}
@@ -314,7 +335,9 @@ const EventList = () => {
                 image={event.appWebHeroImage}
                 dates={event.dates} // Pass the entire dates array
               />
-            ))}
+            ))
+          }
+
 
           </div>
 

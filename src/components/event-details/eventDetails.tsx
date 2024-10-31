@@ -6,9 +6,11 @@ import { IoLocationOutline } from "react-icons/io5";
 import { LuClock3 } from "react-icons/lu";
 import { MdOutlineDateRange } from "react-icons/md";
 import "./eventDetails.css";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import LoadingSkeleton from "../Skelton";
 export default function EventDetails() {
+  const navigate = useNavigate();
+
   const { id } = useParams();
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [showDates, setShowDates] = useState<boolean>(false);
@@ -139,6 +141,7 @@ export default function EventDetails() {
           style={{ height: "420px" }}
           width={"100%"}
           className="position-absolute inset-0"
+    
         />
         <svg
           className="logo"
@@ -146,6 +149,7 @@ export default function EventDetails() {
           width="66.673"
           height="56.063"
           viewBox="0 0 66.673 56.063"
+          onClick={() => navigate(-1)}
         >
           <path
             id="Path_43234"

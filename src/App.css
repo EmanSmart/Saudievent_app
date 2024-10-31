@@ -11,6 +11,7 @@ body {
   min-height: 600px;
   overflow-x: hidden;
   font-size: 90%;
+  background-color: #2e245a;
 }
 
 .loading-skeleton h1,
