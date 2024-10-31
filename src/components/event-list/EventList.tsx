@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import EventCard from "../event-card/EventCard";
 import "./EventList.css";
+import LoadingSkeleton from "../Skelton";
 
 
 interface Event {
@@ -170,41 +171,41 @@ const EventList = () => {
     setSelectedSeasonTitle("All Seasons");
     setSelectedZoneTitle("Zones");
     setSelectedInterestTitle("Interest");
+    setSelectedZoneId("")
+    setSelectedInterstId("")
+    fetchEvents()
   }
+  const fetchEvents = async () => {
+    setEvents(null)
+    try {
+      const seasonIdParam = selectedSeasonId ? `season_id=${selectedSeasonId}` : null;
+      const zoneIdParam = selectedZoneId ? `zone_id=${selectedZoneId}` : null;
+      const interestIdParam = selectedInterstId ? `interest_id=${selectedInterstId}` : null;
 
+      const queryParams = [seasonIdParam, zoneIdParam, interestIdParam].filter(Boolean).join('&');
+
+      const url = `${import.meta.env.VITE_API_URL}/twk/event?${queryParams}`;
+
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch events");
+      }
+      const { events }: { count: number; events: Event[] } = await response.json();
+      setEvents(events)
+
+    } catch (error) {
+      console.error("Error fetching events:", error);
+    }
+  };
 
   // ======================events-list
-  const [events, setEvents] = useState<Event[]>([]);
+  const [events, setEvents] = useState<Event[] | null>();
 
   useEffect(() => {
-    const fetchEvents = async () => {
-
-      try {
-        const seasonIdParam = selectedSeasonId ? `season_id=${selectedSeasonId}` : '';
-        const zoneIdParam = selectedZoneId ? `zone_id=${selectedZoneId}` : '';
-        const interestIdParam = selectedInterstId ? `interest_id=${selectedInterstId}` : '';
-
-        const queryParams = [seasonIdParam, zoneIdParam, interestIdParam].filter(Boolean).join('&');
-
-        const url = `${import.meta.env.VITE_API_URL}/twk/event?${queryParams}`;
-
-        const response = await fetch(url);
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch events");
-        }
-
-        const { events }: { count: number; events: Event[] } = await response.json();
-        console.log(events, "events");
-
-        setEvents(events); // Store raw events
-      } catch (error) {
-        console.error("Error fetching events:", error);
-      }
-    };
 
     fetchEvents();
-  }, [selectedSeasonId, selectedZoneId, selectedInterstId]);
+  }, []);
 
   return (
     <section className="container">
@@ -307,8 +308,11 @@ const EventList = () => {
                 Clear
               </button>
 
-              <button type="button" className="btn btn-primary apply  w-50 mx-1 fw-bold">
-                Apply
+              <button type="button"
+                // style={events==null && { background: 'gray' }}
+                disabled={events == null ? true : false}
+                onClick={() => fetchEvents()} className="btn btn-primary apply  w-50 mx-1 fw-bold">
+                {events ? 'Apply' : '...Apply'}
               </button>
 
             </div>
@@ -316,27 +320,29 @@ const EventList = () => {
         </div>
         <div className="card-col">
           <div className="card-col">
-          {
-            events.length==0  ? 
-            <div className="text-center text-white pb-5">
-              <p>No Events</p>
-              <button type="button" className="btn btn-primary clear w-50 mx-1 fw-bold"
-                onClick={() => handleClearAll()}
-              >
-                Clear
-              </button>
-            </div>
-            :
-            events.map((event) => (
-              <EventCard
-                key={event._id}
-                id={event._id}
-                title={event.name}
-                image={event.appWebHeroImage}
-                dates={event.dates} // Pass the entire dates array
-              />
-            ))
-          }
+            {!events ? <>
+              <LoadingSkeleton /><LoadingSkeleton /><LoadingSkeleton /><LoadingSkeleton />     <LoadingSkeleton /><LoadingSkeleton /><LoadingSkeleton /><LoadingSkeleton /> <LoadingSkeleton /><LoadingSkeleton /><LoadingSkeleton /><LoadingSkeleton /> <LoadingSkeleton /><LoadingSkeleton /><LoadingSkeleton /><LoadingSkeleton />
+            </>
+              : events.length == 0 ?
+                <div className="text-center text-white pb-5">
+                  <p>No Events</p>
+                  <button type="button" className="btn btn-primary clear w-50 mx-1 fw-bold"
+                    onClick={() => handleClearAll()}
+                  >
+                    Clear
+                  </button>
+                </div>
+                :
+                events.map((event) => (
+                  <EventCard
+                    key={event._id}
+                    id={event._id}
+                    title={event.name}
+                    image={event.appWebHeroImage}
+                    dates={event.dates} // Pass the entire dates array
+                  />
+                ))
+            }
 
 
           </div>

@@ -149,7 +149,7 @@ export default function EventDetails() {
           width="66.673"
           height="56.063"
           viewBox="0 0 66.673 56.063"
-          onClick={() => navigate(-1)}
+          onClick={() =>navigate(-1)}
         >
           <path
             id="Path_43234"
