@@ -6,7 +6,7 @@ import LoadingSkeleton from "../Skelton";
 interface Event {
   _id: number;
   name: string;
-  appWebHeroImage: string;
+  image: string;
   dates: {
     startDate: string;
     endDate: string;
@@ -367,7 +367,7 @@ const EventList = () => {
                   key={event._id}
                   id={event._id}
                   title={event.name}
-                  image={event.appWebHeroImage}
+                  image={event.image}
                   dates={event.dates} // Pass the entire dates array
                 />
               ))
