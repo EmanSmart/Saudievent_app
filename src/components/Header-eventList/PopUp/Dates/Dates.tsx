@@ -236,7 +236,6 @@ const DatesFilter: React.FC<DatesFilterProps> = ({ setDates, setMonth }) => {
                             setDaySelected(day);
                             setSelectedMonthIndex(index);
                             setSelectedDate({ day, month: index + 1 });
-                            console.log({ day, month: index + 1 });
                           }
                         }}
                         style={{

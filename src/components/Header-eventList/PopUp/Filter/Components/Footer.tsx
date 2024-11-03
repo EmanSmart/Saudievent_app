@@ -33,7 +33,6 @@ const FooterEvents: React.FC<FooterEventsProps> = ({
 
   // Function to handle applying the filter
   const handleApplyFilter = () => {
-    console.log(selectedPlaces, selectedInterests, minValue, maxValue);
     sessionStorage.setItem(
       "filter",
       JSON.stringify({
