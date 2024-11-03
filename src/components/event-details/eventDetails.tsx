@@ -35,13 +35,32 @@ export default function EventDetails() {
     event: {
       description: string;
       eventDate: EventDate[];
-      appWebHeroImage?: string;
+      heroImage?: string;
       name?: string;
       image?: string[];
       ticket_mix_url?: string;
       buttonName?: string;
+      zone?: {
+        name: string;
+        nameAra: string;
+      }[];
     };
   }
+
+  interface EventDataRes {
+    event: {
+      description: string;
+      eventDate: EventDate[];
+      heroImage?: string;
+      name?: string;
+      image?: string[];
+      ticket_mix_url?: string;
+      buttonName?: string;
+      zone?: {
+        name: string;
+        nameAra: string;
+      }[];
+    }[]};
 
   interface CalendarDate {
     day: string;
@@ -49,10 +68,13 @@ export default function EventDetails() {
   }
 
   const toggleReadMore = () => {
-    if (!isExpanded || text.length <= maxChars) {
+    if ((!isExpanded || text.length <= maxChars) && textRef.current) {
       textRef.current!.innerHTML = text;
     } else {
-      textRef.current!.innerHTML = `${text.substring(0, maxChars)}...`;
+      if( textRef.current){
+
+        textRef.current!.innerHTML = `${text.substring(0, maxChars)}...`;
+      }
     }
     setIsExpanded(!isExpanded);
   };
@@ -67,21 +89,21 @@ export default function EventDetails() {
   };
 
   const renderText = () => {
-    if (isExpanded || text.length <= maxChars) {
+    if(textRef.current)
+   { if (isExpanded || text.length <= maxChars) {
       textRef.current!.innerHTML = text;
     } else {
       textRef.current!.innerHTML = `${text.substring(0, maxChars)}...`;
-    }
+    }}
   };
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/twk/event/${id}`)
       .then((response) => response.json())
-      .then((data: EventData) => {
-        setData(data.event);
-        setText(data.event.description);
-
-        const dates: CalendarDate[] = data.event.eventDate.map((event) => {
+      .then((res: EventDataRes) => {
+        setData(res.event[0]);
+        setText(res.event[0].description);
+        const dates: CalendarDate[] = res.event[0].eventDate.map((event) => {
           const startDate = new Date(event.startDate);
           const formattedDate = startDate.toLocaleDateString("en-GB", {
             day: "numeric",
@@ -136,12 +158,12 @@ export default function EventDetails() {
         className="position-relative"
       >
         <img
-          src={data?.appWebHeroImage}
+          src={data?.heroImage}
           height={"420px"}
           style={{ height: "420px" }}
           width={"100%"}
           className="position-absolute inset-0"
-    
+
         />
         <svg
           className="logo"
@@ -149,7 +171,7 @@ export default function EventDetails() {
           width="66.673"
           height="56.063"
           viewBox="0 0 66.673 56.063"
-          onClick={() =>navigate(-1)}
+          onClick={() => navigate(-1)}
         >
           <path
             id="Path_43234"
@@ -326,14 +348,13 @@ export default function EventDetails() {
 
           <div className="position-relative z-50">
             {data ? <h2>{data?.name}</h2> : <LoadingSkeleton />}
-            <div className="d-flex align-items-center">
-              <IoLocationOutline className="me-2" size={15} />
-              {data ? (
-                <span className="fs-11">{data?.name}</span>
-              ) : (
-                <LoadingSkeleton />
-              )}
-            </div>
+            {data?.zone!.map((z,index) => {
+              return <div key={index} className="d-flex align-items-center">
+                <IoLocationOutline className="me-2" size={15} />
+                <span className="fs-11">{z.name}</span>
+
+              </div>
+            })}
           </div>
           <Row className="z-50 position-relative">
             <div className="d-flex mt-2 gap-2">
@@ -436,9 +457,10 @@ export default function EventDetails() {
               className="mt-2"
             >
               {data ? (
-                data?.image?.map((i) => {
+                data?.image?.map((i, index) => {
                   return <Card.Img
                     variant="top"
+                    key={index}
                     src={i}
                     alt="Event"
                     width={"100%"}
@@ -564,7 +586,7 @@ export default function EventDetails() {
               className="rounded-pill py-2 px-1 position-fixed"
               style={{ fontSize: "15px", width: "70%", bottom: "25px" }}
             >
-              {data.buttonName}
+              {data.buttonName||'Book Now'}
             </Link>
           ) : (
             <button
@@ -572,7 +594,7 @@ export default function EventDetails() {
               className="rounded-pill py-2 px-1 position-fixed border-0"
               style={{ fontSize: "15px", width: "70%", bottom: "25px", color: 'white', background: "gray" }}
             >
-              {data.buttonName}
+              {data.buttonName||'Free'}
             </button>
           )
         ) : (
