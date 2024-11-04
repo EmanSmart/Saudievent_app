@@ -69,6 +69,12 @@ svg.logo {
   text-wrap: nowrap;
   color: #f48337;
 }
-.container-eventDetails p{
+.container-eventDetails p {
   margin: 0;
+}
+
+.div-Gallery {
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
 }

@@ -7,6 +7,7 @@ interface Event {
   _id: number;
   name: string;
   image: string;
+  heroImage: string;
   dates: {
     startDate: string;
     endDate: string;
@@ -367,7 +368,7 @@ const EventList = () => {
                   key={event._id}
                   id={event._id}
                   title={event.name}
-                  image={event.image}
+                  image={event.heroImage}
                   dates={event.dates} // Pass the entire dates array
                 />
               ))

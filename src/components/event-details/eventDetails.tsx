@@ -60,7 +60,8 @@ export default function EventDetails() {
         name: string;
         nameAra: string;
       }[];
-    }[]};
+    }[];
+  }
 
   interface CalendarDate {
     day: string;
@@ -71,8 +72,7 @@ export default function EventDetails() {
     if ((!isExpanded || text.length <= maxChars) && textRef.current) {
       textRef.current!.innerHTML = text;
     } else {
-      if( textRef.current){
-
+      if (textRef.current) {
         textRef.current!.innerHTML = `${text.substring(0, maxChars)}...`;
       }
     }
@@ -80,21 +80,22 @@ export default function EventDetails() {
   };
 
   const toggleDates = () => {
-    setShowDates((prev) => !prev)
-    setVisibleDatesCount(7)
-  }
+    setShowDates((prev) => !prev);
+    setVisibleDatesCount(7);
+  };
 
   const loadMoreDates = () => {
     setVisibleDatesCount((prev) => prev + 7);
   };
 
   const renderText = () => {
-    if(textRef.current)
-   { if (isExpanded || text.length <= maxChars) {
-      textRef.current!.innerHTML = text;
-    } else {
-      textRef.current!.innerHTML = `${text.substring(0, maxChars)}...`;
-    }}
+    if (textRef.current) {
+      if (isExpanded || text.length <= maxChars) {
+        textRef.current!.innerHTML = text;
+      } else {
+        textRef.current!.innerHTML = `${text.substring(0, maxChars)}...`;
+      }
+    }
   };
 
   useEffect(() => {
@@ -140,13 +141,14 @@ export default function EventDetails() {
   // ==================handel_share click
   const handleShare = useCallback(() => {
     const currentUrl = window.location.href;
-    navigator.clipboard.writeText(currentUrl)
+    navigator.clipboard
+      .writeText(currentUrl)
       .then(() => {
         // Optional: Show a success message
-        alert('Link copied to clipboard!');
+        alert("Link copied to clipboard!");
       })
       .catch((err) => {
-        console.error('Failed to copy: ', err);
+        console.error("Failed to copy: ", err);
       });
   }, []);
   return (
@@ -163,7 +165,6 @@ export default function EventDetails() {
           style={{ height: "420px" }}
           width={"100%"}
           className="position-absolute inset-0"
-
         />
         <svg
           className="logo"
@@ -348,12 +349,13 @@ export default function EventDetails() {
 
           <div className="position-relative z-50">
             {data ? <h2>{data?.name}</h2> : <LoadingSkeleton />}
-            {data?.zone!.map((z,index) => {
-              return <div key={index} className="d-flex align-items-center">
-                <IoLocationOutline className="me-2" size={15} />
-                <span className="fs-11">{z.name}</span>
-
-              </div>
+            {data?.zone!.map((z, index) => {
+              return (
+                <div key={index} className="d-flex align-items-center">
+                  <IoLocationOutline className="me-2" size={15} />
+                  <span className="fs-11">{z.name}</span>
+                </div>
+              );
             })}
           </div>
           <Row className="z-50 position-relative">
@@ -379,24 +381,30 @@ export default function EventDetails() {
                 </div>
 
                 {showDates &&
-                  calendarDates.slice(1, visibleDatesCount).map((date, index) => (
-                    <div
-                      key={index}
-                      className="d-flex align-items-start gap-3 my-2"
-                    >
-                      <div className="d-flex align-items-center gap-2 w-40 fs-11">
-                        <MdOutlineDateRange size={22} />
-                        <span>{date.day}</span>
+                  calendarDates
+                    .slice(1, visibleDatesCount)
+                    .map((date, index) => (
+                      <div
+                        key={index}
+                        className="d-flex align-items-start gap-3 my-2"
+                      >
+                        <div className="d-flex align-items-center gap-2 w-40 fs-11">
+                          <MdOutlineDateRange size={22} />
+                          <span>{date.day}</span>
+                        </div>
+                        <div className="d-flex align-items-center gap-2 w-60 fs-11">
+                          <LuClock3 size={22} />
+                          <span>{date.time}</span>
+                        </div>
                       </div>
-                      <div className="d-flex align-items-center gap-2 w-60 fs-11">
-                        <LuClock3 size={22} />
-                        <span>{date.time}</span>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
 
                 {hasMoreDates && showDates && (
-                  <p role="button" onClick={loadMoreDates} className="text-center mt-2">
+                  <p
+                    role="button"
+                    onClick={loadMoreDates}
+                    className="text-center mt-2"
+                  >
                     show More
                   </p>
                 )}
@@ -450,22 +458,32 @@ export default function EventDetails() {
         </Row>
 
         <Row className="mt-3">
+          <h5 style={{ fontSize: "16px" }}>Gallery</h5>
           <Col>
-            <h5 style={{ fontSize: "16px" }}>Gallery</h5>
             <Card
-              style={{ width: "91px", height: "85px", overflow: "hidden" }}
-              className="mt-2"
+              style={{
+                overflow: "hidden",
+                flexDirection: "row",
+                flexWrap: "wrap",
+                rowGap:"10px",
+                justifyContent: "space-between",
+                background: "transparent",
+              }}
+              className="mt-2 "
             >
               {data ? (
                 data?.image?.map((i, index) => {
-                  return <Card.Img
-                    variant="top"
-                    key={index}
-                    src={i}
-                    alt="Event"
-                    width={"100%"}
-                    height={"100%"}
-                  />
+                  return (
+                    <Card.Img
+                      style={{ width: "91px", height: "85px", padding: 0 }}
+                      variant="top"
+                      key={index}
+                      src={i}
+                      alt="Event"
+                      width={"100%"}
+                      height={"100%"}
+                    />
+                  );
                 })
               ) : (
                 <LoadingSkeleton img={true} />
@@ -578,7 +596,10 @@ export default function EventDetails() {
         </svg>
       </div>
 
-      <div className="position-sticky d-flex justify-content-center event-btn-container" style={{ zIndex: "5000" }}>
+      <div
+        className="position-sticky d-flex justify-content-center event-btn-container"
+        style={{ zIndex: "5000" }}
+      >
         {data ? (
           data.ticket_mix_url ? (
             <Link
@@ -586,21 +607,26 @@ export default function EventDetails() {
               className="rounded-pill py-2 px-1 position-fixed"
               style={{ fontSize: "15px", width: "70%", bottom: "25px" }}
             >
-              {data.buttonName||'Book Now'}
+              {data.buttonName || "Book Now"}
             </Link>
           ) : (
             <button
               disabled
               className="rounded-pill py-2 px-1 position-fixed border-0"
-              style={{ fontSize: "15px", width: "70%", bottom: "25px", color: 'white', background: "gray" }}
+              style={{
+                fontSize: "15px",
+                width: "70%",
+                bottom: "25px",
+                color: "white",
+                background: "gray",
+              }}
             >
-              {data.buttonName||'Free'}
+              {data.buttonName || "Free"}
             </button>
           )
         ) : (
           <LoadingSkeleton />
         )}
-
       </div>
     </div>
   );
