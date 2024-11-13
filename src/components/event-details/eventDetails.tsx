@@ -465,9 +465,10 @@ export default function EventDetails() {
                 overflow: "hidden",
                 flexDirection: "row",
                 flexWrap: "wrap",
-                rowGap:"10px",
+                rowGap: "10px",
                 justifyContent: "space-between",
                 background: "transparent",
+                border: "none",
               }}
               className="mt-2 "
             >
