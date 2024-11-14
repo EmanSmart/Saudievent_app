@@ -605,7 +605,7 @@ export default function EventDetails() {
           data.ticket_mix_url ? (
             <Link
               to={data.ticket_mix_url}
-              className="rounded-pill py-2 px-1 position-fixed"
+              className="rounded-pill py-2 px-1 position-fixed d-none"
               style={{ fontSize: "15px", width: "70%", bottom: "25px" }}
             >
               {data.buttonName || "Book Now"}
@@ -613,7 +613,7 @@ export default function EventDetails() {
           ) : (
             <button
               disabled
-              className="rounded-pill py-2 px-1 position-fixed border-0"
+              className="rounded-pill py-2 px-1 position-fixed border-0 d-none"
               style={{
                 fontSize: "15px",
                 width: "70%",
