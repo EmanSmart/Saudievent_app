@@ -266,10 +266,10 @@ function httpHelper(endpoint, rawForce) {
 
 function isValidJSON(jsonString) {
   try {
-      JSON.parse(jsonString);
-      return true; 
+    JSON.parse(jsonString);
+    return true;
   } catch (e) {
-      return false; 
+    return false;
   }
 }
 
@@ -567,7 +567,12 @@ window.TWK = {
       });
     });
   },
-  setPaymentConfiguration: function (callbackSuccessUrlList, callbackFailureUrlList, successPageName, failurePageName) {
+  setPaymentConfiguration: function (
+    callbackSuccessUrlList,
+    callbackFailureUrlList,
+    successPageName,
+    failurePageName
+  ) {
     if (!Array.isArray(callbackSuccessUrlList)) {
       throw new Error("callbackSuccessUrlList Argument must be an array");
     }
@@ -581,8 +586,8 @@ window.TWK = {
       successPageName: successPageName,
       failurePageName: failurePageName,
     };
- 
-    let jsonString = JSON.stringify(config)
+
+    let jsonString = JSON.stringify(config);
     if (isValidJSON(jsonString)) {
       if (window.webkit) {
         window.webkit.messageHandlers.paymentHandler.postMessage(jsonString);
@@ -590,22 +595,28 @@ window.TWK = {
         window.PaymentConfigInterface.paymentConfig(jsonString);
       }
     }
-  }
+  },
   // other properties
 };
 
 window.TWK.V2 = {
-    generateToken: function () {
-        return httpHelper("v2/authenticate/generatetoken");
-      },
-      getUserFullName: function () {
-        return httpHelper("v2/user_data/full_name");
-      },
-      getUserFamilyMembers: function (minage, maxage, gender) {
-        if (minage > 0 && maxage > 0) {
-          return httpHelper(
-            "v2/user_data/family_members?age=" + minage + "-" + maxage + "&gender=" + gender
-          );
-        } else return httpHelper("v2/user_data/family_members");
-      }
+  generateToken: function () {
+    return httpHelper("v2/authenticate/generatetoken");
+  },
+  getUserFullName: function () {
+    return httpHelper("v2/user_data/full_name");
+  },
+  getUserFamilyMembers: function (minage, maxage, gender) {
+    if (minage > 0 && maxage > 0) {
+      return httpHelper(
+        "v2/user_data/family_members?age=" +
+          minage +
+          "-" +
+          maxage +
+          "&gender=" +
+          gender
+      );
+    } else return httpHelper("v2/user_data/family_members");
+  },
 };
+export default window.TWK;
