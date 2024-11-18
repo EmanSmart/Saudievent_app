@@ -7,31 +7,49 @@ import "./App.css";
 import "./index.css";
 import { useEffect } from "react";
 //  @ts-expect-error  // to skip the error
- import TWKHelper from "./Twkhelper.js";
+import TWKHelper from "./Twkhelper.js";
 
 function App() {
-  console.log("TWKHelper",TWKHelper)
-
   useEffect(() => {
     const fetchLogs = async () => {
       try {
         const response = await fetch(`${import.meta.env.VITE_API_URL_DEV}/twk/logs/${TWKHelper.getUserId()}`);
-  
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-  
         const data = await response.json();
-        console.log(data);
+        if (data.data == false) {
+          try {
+            const response = await fetch(`${import.meta.env.VITE_API_URL_DEV}/twk/logs`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                national_id: TWKHelper.getUserId(), "data": {
+                  "key1": 1,
+                  "key2": 2,
+                  "key3": "value",
+                  "key4": true
+                }
+              }),
+            });
+
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            console.log(data);
+          } catch (error) {
+            console.error("Error fetching logs:", error);
+          }
+        }
       } catch (error) {
         console.error("Error fetching logs:", error);
       }
     };
-  
     fetchLogs();
   }, []);
-  
-  // console.log("console App ", TWKHelper.getRawData());
   return (
     <Router>
       <Routes>

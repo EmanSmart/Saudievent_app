@@ -288,7 +288,7 @@ window.TWK = {
   },
   getUserId: function () {
     // return httpHelper("/user_data/user_id");
-    return "1234567845678908";
+    return "12345678458908";
   },
   getUserType: function () {
     return httpHelper("/user_data/user_type");
