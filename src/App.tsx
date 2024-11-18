@@ -15,7 +15,7 @@ function App() {
   useEffect(() => {
     const fetchLogs = async () => {
       try {
-        const response = await fetch(`https://apidev.saudievents.sa/api/twk/logs/${TWKHelper.getUserId()}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL_DEV}/twk/logs/${TWKHelper.getUserId()}`);
   
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
