@@ -5,18 +5,33 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import "./App.css";
 import "./index.css";
-// @ts-expect-error  // to skip the error
-import TWKHelper from "./Twkhelper.js";
 import { useEffect } from "react";
+//  @ts-expect-error  // to skip the error
+ import TWKHelper from "./Twkhelper.js";
 
 function App() {
-  // console.log("console App ", TWKHelper.getRawData());
   console.log("TWKHelper",TWKHelper)
-  useEffect(()=>{
-    console.log("dd",TWKHelper.getUserId())
-    // Api
 
-  },[])
+  useEffect(() => {
+    const fetchLogs = async () => {
+      try {
+        const response = await fetch(`https://apidev.saudievents.sa/api/twk/logs/${TWKHelper.getUserId()}`);
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+  
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.error("Error fetching logs:", error);
+      }
+    };
+  
+    fetchLogs();
+  }, []);
+  
+  // console.log("console App ", TWKHelper.getRawData());
   return (
     <Router>
       <Routes>
