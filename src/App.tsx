@@ -5,11 +5,18 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import "./App.css";
 import "./index.css";
-// // @ts-expect-error  // to skip the error
-// import TWKHelper from "./Twkhelper.js";
+// @ts-expect-error  // to skip the error
+import TWKHelper from "./Twkhelper.js";
+import { useEffect } from "react";
 
 function App() {
   // console.log("console App ", TWKHelper.getRawData());
+  console.log("TWKHelper",TWKHelper)
+  useEffect(()=>{
+    console.log("dd",TWKHelper.getUserId())
+    // Api
+
+  },[])
   return (
     <Router>
       <Routes>
