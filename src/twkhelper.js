@@ -287,6 +287,7 @@ window.TWK = {
     return httpHelper("/gallery/raw_data?file_name=" + file, true);
   },
   getUserId: function () {
+    // return httpHelper("/user_data/user_id");
     return "1234567845678908";
   },
   getUserType: function () {
